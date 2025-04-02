@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- "viewport" targets the visible area of the webpage in the browser 
+         "width=device-width" sets the width to the device's width
+         "initial-scape=1.0" sets the initial zoom level to 1.0 
+         
+         Mobile browsers may assume a width of 980px regardless of device.
+         In order to display all content, the device may "zoom out" to show
+         all of the content -> tiny text, unreadable
+
+         This tag forces the browser to use the screen width of the device
+         *when using responsive design*. This may force elements to split
+         over multiple lines to look nicer and readable.
+
+         If you do not use responsive web design, this tag has no purpose.
+         -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- pre-fetch now -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- integrity: hash to make sure the file is not tampered
+           crossorigin: go ahead and load from another domain
+    -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="demo.css">
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+</head>
+
+<!-- the classes use Tailwind syntax. More info later in the quarter -->
+<body class="bg-gray-100 p-6">
+    <header class="bg-blue-500 text-white p-4 rounded-md shadow-md mb-8">
+        <h1 class="text-2xl font-semibold">HTML5 Showcase</h1>
+        <nav>
+            <ul class="flex flex-wrap space-x-4 mt-2">
+                <li><a href="#section1" class="hover:text-blue-200 no-underline">Semantic Tags</a></li>
+                <li><a href="#section2" class="hover:text-blue-200 no-underline">Video & Canvas</a></li>
+                <li><a href="#section3" class="hover:text-blue-200 no-underline">Geolocation & Map</a></li>
+                <li><a href="#section4" class="hover:text-blue-200 no-underline">Item Drag & Drop</a></li>
+                <li><a href="#section5" class="hover:text-blue-200 no-underline">Form Inputs</a></li>
+                <li><a href="#section6" class="hover:text-blue-200 no-underline">File Upload</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="space-y-8">
+        <section id="section1" class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Semantic Tags</h2>
+            <article class="border-l-4 border-green-500 pl-4">
+                <header>
+                    <h3 class="text-lg font-semibold text-green-600">Article Title</h3>
+                    <p class="text-gray-500 text-sm">Published: <time datetime="2024-07-24">July 24, 2024</time></p>
+                </header>
+                <p class="mb-4">This article demonstrates the use of semantic HTML5 tags like <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;aside&gt;</code>, and <code>&lt;time&gt;</code>. They add meaning to the structure.</p>
+                <section class="bg-gray-50 p-4 rounded-md">
+                    <h4 class="text-md font-semibold text-gray-700 mb-2">Section 1: Introduction</h4>
+                    <p>This is the introduction to the article. We are using a &lt;section&gt; tag here.</p>
+                </section>
+                <footer class="text-gray-500 text-sm mt-4 pt-2 border-t border-gray-200">Author: John Doe</footer>
+            </article>
+            <aside class="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-md mt-4">
+                 <h4 class="text-md font-semibold text-yellow-700 mb-2">Aside</h4>
+                 <p class="text-gray-700">This <code>&lt;aside&gt;</code> element provides related tangential information.</p>
+            </aside>
+        </section>
+
+        <section id="section2" class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Video & Canvas</h2>
+            <div class="flex flex-col md:flex-row gap-6">
+                <article class="flex-1">
+                    <h3 class="text-lg font-semibold mb-2 text-blue-600">Video Example</h3>
+                    <video controls width="640" class="rounded-md shadow-sm" loop>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="mt-2 text-gray-700">Embedded video using the <code>&lt;video&gt;</code> tag.</p>
+                </article>
+                <article class="flex-1">
+                    <h3 class="text-lg font-semibold mb-2 text-blue-600">Canvas: Logo Animation & Drawing</h3>
+                    <canvas id="uclaCanvas" width="320" height="240"></canvas>
+                    <p id="canvasStatus" class="mt-2 text-gray-700 text-sm">Animating logo...</p>
+                    <button id="clearCanvas" class="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-md text-sm hidden">Clear Drawing</button>
+                    <script>
+                        // Canvas Script (UCLA Logo Animation & Drawing - unchanged from previous version)
+                        const canvas = document.getElementById("uclaCanvas");
+                        const ctx = canvas.getContext("2d");
+                        const statusP = document.getElementById("canvasStatus");
+                        const clearButton = document.getElementById("clearCanvas");
+                        const logoColor = "#2774AE", logoLineWidth = 5, animationSpeed = 2;
+                        let animationProgress = 0, animationComplete = false;
+                        const logoPaths = [ [[50, 180], [50, 80], [70, 60], [90, 80], [90, 180]], [[140, 60], [120, 60], [100, 80], [100, 160], [120, 180], [140, 180]], [[160, 180], [160, 60], [180, 60]], [[160, 120], [190, 120]], [[210, 180], [230, 60], [250, 180]], [[220, 120], [240, 120]] ];
+                        let totalLength = 0; logoPaths.forEach(p => { for (let i = 0; i < p.length - 1; i++) totalLength += Math.hypot(p[i+1][0]-p[i][0], p[i+1][1]-p[i][1]); });
+                        let isDrawing = false, lastX = 0, lastY = 0, userDrawingEnabled = false, userDrawingData = null;
+                        function animateLogo() { if (animationComplete) return; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.lineWidth = logoLineWidth; ctx.strokeStyle = logoColor; ctx.lineCap = "round"; ctx.lineJoin = "round"; let drawnLength = 0, progressTarget = animationProgress; ctx.beginPath(); for (const p of logoPaths) { for (let i = 0; i < p.length - 1; i++) { const p1=p[i], p2=p[i+1], segLen = Math.hypot(p2[0]-p1[0], p2[1]-p1[1]); if (drawnLength + segLen >= progressTarget) { const ratio = (progressTarget - drawnLength) / segLen; ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p1[0] + (p2[0]-p1[0])*ratio, p1[1] + (p2[1]-p1[1])*ratio); drawnLength = progressTarget; break; } else { ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); drawnLength += segLen; } } if (drawnLength >= progressTarget) break; } ctx.stroke(); animationProgress += animationSpeed; if (animationProgress >= totalLength) { animationComplete = true; userDrawingEnabled = true; statusP.textContent = "Logo done. Draw!"; clearButton.classList.remove('hidden'); userDrawingData = ctx.getImageData(0, 0, canvas.width, canvas.height); addDrawingListeners(); } else { requestAnimationFrame(animateLogo); } }
+                        function startDrawing(e) { if (!userDrawingEnabled) return; isDrawing = true; [lastX, lastY] = getMousePos(canvas, e); }
+                        function draw(e) { if (!isDrawing || !userDrawingEnabled) return; const [cX, cY] = getMousePos(canvas, e); if (userDrawingData) ctx.putImageData(userDrawingData, 0, 0); ctx.beginPath(); ctx.strokeStyle = "#000"; ctx.lineWidth = 2; ctx.moveTo(lastX, lastY); ctx.lineTo(cX, cY); ctx.stroke(); userDrawingData = ctx.getImageData(0, 0, canvas.width, canvas.height); [lastX, lastY] = [cX, cY]; }
+                        function stopDrawing() { if (!userDrawingEnabled) return; isDrawing = false; }
+                        function getMousePos(cd, ev) { const r = cd.getBoundingClientRect(), cX = ev.clientX || ev.touches[0].clientX, cY = ev.clientY || ev.touches[0].clientY; return [cX - r.left, cY - r.top]; }
+                        function addDrawingListeners() { canvas.addEventListener("mousedown", startDrawing); canvas.addEventListener("mousemove", draw); canvas.addEventListener("mouseup", stopDrawing); canvas.addEventListener("mouseleave", stopDrawing); canvas.addEventListener("touchstart", (e)=>{e.preventDefault();startDrawing(e);},{passive:false}); canvas.addEventListener("touchmove", (e)=>{e.preventDefault();draw(e);},{passive:false}); canvas.addEventListener("touchend", stopDrawing); canvas.addEventListener("touchcancel", stopDrawing); }
+                        clearButton.addEventListener('click', () => { if (!userDrawingEnabled) return; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.lineWidth = logoLineWidth; ctx.strokeStyle = logoColor; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.beginPath(); logoPaths.forEach(p => { ctx.moveTo(p[0][0], p[0][1]); for (let i = 1; i < p.length; i++) ctx.lineTo(p[i][0], p[i][1]); }); ctx.stroke(); userDrawingData = ctx.getImageData(0, 0, canvas.width, canvas.height); statusP.textContent = "Cleared. Draw again!"; });
+                        requestAnimationFrame(animateLogo); // Start animation
+                    </script>
+                </article>
+            </div>
+        </section>
+
+        <section id="section3" class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Geolocation & Map</h2>
+            <p class="text-gray-700 mb-4">Click the button to show your current location on the map.</p>
+            <button id="getLocation" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 ease-in-out">Get Location</button>
+            <div id="locationInfo" class="mt-4 text-gray-700 text-sm"></div>
+            <div id="map"></div>
+            <script>
+                // Geolocation & Map Script
+                const locationInfoDiv = document.getElementById("locationInfo");
+                const getLocationButtonMap = document.getElementById("getLocation");
+                let map = null; // Variable to hold the map instance
+                let marker = null; // Variable to hold the map marker
+
+                getLocationButtonMap.addEventListener("click", () => {
+                    locationInfoDiv.textContent = "Requesting location..."; // Provide feedback
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPositionOnMap, showGeoError, {
+                            enableHighAccuracy: true, timeout: 10000, maximumAge: 0
+                        });
+                    } else {
+                        locationInfoDiv.innerHTML = "Geolocation is not supported by this browser.";
+                    }
+                });
+
+                function initializeMap(lat, lon) {
+                    // Initialize the map only if it hasn't been already
+                    if (!map) {
+                        map = L.map('map').setView([lat, lon], 13); // Set initial view and zoom level
+
+                        // Add OpenStreetMap tile layer
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+                    }
+                }
+
+                function showPositionOnMap(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+
+                    // Display text info
+                    locationInfoDiv.innerHTML = `Latitude: ${lat.toFixed(6)}<br>Longitude: ${lon.toFixed(6)}<br>Accuracy: ${accuracy.toFixed(0)} meters`;
+
+                    // Initialize map if needed
+                    initializeMap(lat, lon);
+
+                    // Set map view to the new location
+                    map.setView([lat, lon], 15); // Zoom in a bit more
+
+                    // Remove previous marker if it exists
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+
+                    // Add a new marker
+                    marker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`<b>Your Location</b><br>Accuracy: ${accuracy.toFixed(0)}m`).openPopup();
+
+                    // Optional: Add a circle for accuracy
+                    // L.circle([lat, lon], { radius: accuracy }).addTo(map);
+                }
+
+
+                function showGeoError(error) {
+                    // Display error in the info div
+                    let message = "An unknown error occurred.";
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED: message = "User denied the request for Geolocation."; break;
+                        case error.POSITION_UNAVAILABLE: message = "Location information is unavailable."; break;
+                        case error.TIMEOUT: message = "The request to get user location timed out."; break;
+                    }
+                    locationInfoDiv.innerHTML = `<span class="text-red-600 font-medium">Error:</span> ${message} (Code: ${error.code})`;
+
+                    // Optionally initialize map to a default location on error
+                    // initializeMap(34.0522, -118.2437); // Default to Los Angeles
+                }
+            </script>
+        </section>
+
+        <section id="section4" class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Item Drag & Drop</h2>
+            <p class="text-gray-700 mb-4">Drag the yellow square between the zones. Use Reset to return it.</p>
+            <div class="drag-container">
+                <div id="draggable-origin" class="droppable-area">
+                    <div id="draggable" draggable="true">Drag me</div>
+                </div>
+                <div id="dropzone" class="droppable-area">Drop here</div>
+            </div>
+            <div class="text-center mt-4">
+                 <div id="feedback" class="text-gray-700"></div>
+                 <button id="resetDragDrop" class="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-3 rounded-md text-sm">Reset</button>
+            </div>
+
+            <script>
+                // Item Drag and Drop Script (Updated)
+                const draggableItem = document.getElementById("draggable");
+                const dropZones = document.querySelectorAll(".droppable-area"); // Both origin and target are droppable
+                const originZone = document.getElementById("draggable-origin");
+                const feedbackMsg = document.getElementById("feedback");
+                const resetButton = document.getElementById("resetDragDrop");
+
+                let draggedElement = null; // Keep track of the element being dragged
+
+                // --- Drag Events on the Item ---
+                draggableItem.addEventListener("dragstart", (event) => {
+                    draggedElement = event.target; // Store the element being dragged
+                    event.dataTransfer.setData("text/plain", event.target.id);
+                    event.dataTransfer.effectAllowed = "move";
+                    setTimeout(() => event.target.classList.add("opacity-50"), 0); // Make it semi-transparent
+                    feedbackMsg.textContent = "Dragging...";
+                });
+
+                draggableItem.addEventListener("dragend", (event) => {
+                    // Runs after drop or cancellation
+                    event.target.classList.remove("opacity-50"); // Restore opacity
+                    feedbackMsg.textContent = ""; // Clear feedback after a short delay
+                    draggedElement = null; // Clear the tracked element
+                });
+
+                // --- Drop Zone Events ---
+                dropZones.forEach(zone => {
+                    zone.addEventListener("dragenter", (event) => {
+                        // Prevent default to allow drop
+                        event.preventDefault();
+                        // Add visual feedback when entering a valid drop zone
+                        if (event.target.classList.contains('droppable-area') && event.target !== draggedElement.parentNode) {
+                             event.target.classList.add("bg-green-100", "border-green-500");
+                        }
+                    });
+
+                    zone.addEventListener("dragover", (event) => {
+                        // Prevent default to allow drop
+                        event.preventDefault();
+                        event.dataTransfer.dropEffect = "move"; // Show 'move' cursor
+                    });
+
+                    zone.addEventListener("dragleave", (event) => {
+                        // Remove visual feedback when leaving
+                         if (event.target.classList.contains('droppable-area')) {
+                            event.target.classList.remove("bg-green-100", "border-green-500");
+                         }
+                    });
+
+                    zone.addEventListener("drop", (event) => {
+                        event.preventDefault(); // Prevent default drop action
+                        if (event.target.classList.contains('droppable-area') && event.target !== draggedElement.parentNode) {
+                            // Remove styling
+                            event.target.classList.remove("bg-green-100", "border-green-500");
+
+                            // Append the dragged element to the target drop zone
+                            // Check if the dropzone is empty or already contains the placeholder text
+                            if (!event.target.contains(draggedElement)) {
+                                // Clear placeholder text if dropping into the target zone
+                                if (event.target.id === 'dropzone' && event.target.textContent.includes('Drop here')) {
+                                     event.target.textContent = '';
+                                }
+                                event.target.appendChild(draggedElement);
+                                feedbackMsg.textContent = `Dropped in ${event.target.id === 'dropzone' ? 'Target Zone' : 'Origin Zone'}!`;
+                            }
+                        } else {
+                             // If dropped on itself or invalid area within zone, remove highlight
+                             event.target.classList.remove("bg-green-100", "border-green-500");
+                             feedbackMsg.textContent = "Drop cancelled.";
+                        }
+                    });
+                });
+
+                // --- Reset Button ---
+                resetButton.addEventListener("click", () => {
+                    // Move the draggable item back to the origin zone
+                    originZone.appendChild(draggableItem);
+                    // Restore placeholder text in target zone if empty
+                    const targetZone = document.getElementById('dropzone');
+                    if (!targetZone.contains(draggableItem) && targetZone.children.length === 0) {
+                         targetZone.textContent = 'Drop here';
+                    }
+                    feedbackMsg.textContent = "Item reset to origin.";
+                });
+            </script>
+        </section>
+
+        <section id="section5" class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Form Inputs</h2>
+            <form class="space-y-4">
+                 <div>
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email (<code>type="email"</code>):</label>
+                    <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required placeholder="you@example.com">
+                </div>
+                <div>
+                    <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date (<code>type="date"</code>):</label>
+                    <input type="date" id="date" name="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label for="color" class="block text-gray-700 text-sm font-bold mb-2">Color (<code>type="color"</code>):</label>
+                    <input type="color" id="color" name="color" value="#2774AE" class="p-1 h-10 w-14 block bg-white border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label for="range" class="block text-gray-700 text-sm font-bold mb-2">Range (<code>type="range"</code>): <output for="range" id="rangeValue">50</output></label>
+                    <input type="range" id="range" name="range" min="1" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" oninput="document.getElementById('rangeValue').value = this.value">
+                </div>
+                <div>
+                    <label for="search" class="block text-gray-700 text-sm font-bold mb-2">Search (<code>type="search"</code>):</label>
+                    <input type="search" id="search" name="search" placeholder="Search..." class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">Submit</button>
+            </form>
+            <p class="mt-4 text-gray-700 text-sm">Demonstrating various HTML5 form input types.</p>
+        </section>
+
+        <section id="section6" class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">File Upload (Drag & Drop / Button)</h2>
+            <p class="text-gray-700 mb-4">Drag files into the zone below or use the button to select files.</p>
+
+            <div id="file-dropzone">
+                <p>Drag & Drop Files Here</p>
+                <p class="text-sm my-2">or</p>
+                <label for="fileInput" class="file-input-button">
+                    Select Files
+                </label>
+                <input type="file" id="fileInput" multiple> </div>
+
+            <div id="file-feedback" class="text-gray-700"></div>
+            <div id="file-list">
+                <h4 class="font-semibold text-gray-800">Selected Files:</h4>
+                <ul id="files-ul" class="mt-2">
+                    <li id="no-files" class="text-gray-500">No files selected yet.</li>
+                </ul>
+            </div>
+
+            <script>
+                // File Upload Script
+                const fileDropZone = document.getElementById('file-dropzone');
+                const fileInput = document.getElementById('fileInput');
+                const fileListUl = document.getElementById('files-ul');
+                const fileFeedback = document.getElementById('file-feedback');
+                const noFilesLi = document.getElementById('no-files');
+
+                // --- Drag and Drop Event Listeners ---
+                fileDropZone.addEventListener('dragenter', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fileDropZone.classList.add('dragover');
+                    fileFeedback.textContent = 'Drop files now!';
+                });
+
+                fileDropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fileDropZone.classList.add('dragover'); // Keep highlight
+                    e.dataTransfer.dropEffect = 'copy'; // Indicate copying files
+                });
+
+                fileDropZone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Only remove highlight if not leaving to an element inside the dropzone
+                    if (e.target === fileDropZone || !fileDropZone.contains(e.relatedTarget)) {
+                        fileDropZone.classList.remove('dragover');
+                        fileFeedback.textContent = '';
+                    }
+                });
+
+                fileDropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fileDropZone.classList.remove('dragover');
+                    fileFeedback.textContent = 'Processing files...';
+
+                    const files = e.dataTransfer.files; // Get the dropped files
+                    handleFiles(files);
+                });
+
+                // --- Button Click (triggers hidden input) ---
+                // The <label> tag handles triggering the input click
+
+                // --- File Input Change Event ---
+                fileInput.addEventListener('change', (e) => {
+                    fileFeedback.textContent = 'Processing files...';
+                    const files = e.target.files; // Get the selected files
+                    handleFiles(files);
+                });
+
+                // --- Prevent default drag/drop on the window ---
+                // This prevents the browser from opening the dragged file
+                window.addEventListener('dragover', (e) => e.preventDefault(), false);
+                window.addEventListener('drop', (e) => e.preventDefault(), false);
+
+
+                // --- Function to Handle Files (from drop or input) ---
+                function handleFiles(files) {
+                    fileListUl.innerHTML = ''; // Clear previous list
+                    if (!files || files.length === 0) {
+                        fileListUl.appendChild(noFilesLi); // Show 'no files' message
+                        fileFeedback.textContent = '';
+                        return;
+                    }
+
+                    // Display file names
+                    Array.from(files).forEach(file => {
+                        const li = document.createElement('li');
+                        li.textContent = `${file.name} (${formatBytes(file.size)}) - Type: ${file.type || 'N/A'}`;
+                        fileListUl.appendChild(li);
+                    });
+
+                    fileFeedback.textContent = `${files.length} file(s) selected.`;
+
+                    // Reset the file input value so the 'change' event fires
+                    // even if the same file is selected again.
+                    fileInput.value = '';
+                }
+
+                // Helper function to format bytes
+                function formatBytes(bytes, decimals = 2) {
+                    if (bytes === 0) return '0 Bytes';
+                    const k = 1024;
+                    const dm = decimals < 0 ? 0 : decimals;
+                    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                    const i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+                }
+            </script>
+        </section>
+
+        <section id="section7" class="bg-white p-6 rounded-md shadow-md">
+            
+            <p>While I enjoy working, <strong>I'd rather be mountain biking</strong>. Here are some <em>mileage</em> stats of my mileage over the years.</p>
+
+            <table>
+              <caption>
+                Mountain Biking Mileage by Bike Model and Type
+              </caption>
+              <colgroup>
+                <!-- Works better with simpler tables -->
+                <col span="2" style="text-align: left">
+                <col span="6">
+                <col style="text-align: right">
+              </colgroup>
+              <thead>
+                <!-- First row contains everything except years 2020/2021 -->
+                <tr>
+                  <th scope="col" rowspan="2">Bike Type</th>
+                  <th scope="col" rowspan="2">Bike</th>
+                  <th scope="col" rowspan="2">2019</th>
+                  <th scope="col" colspan="2">COVID WFH</th>
+                  <th scope="col" rowspan="2">2022</th>
+                  <th scope="col" rowspan="2">2023</th>
+                  <th scope="col" rowspan="2">2024</th>
+                  <th scope="col" rowspan="2">TOTAL MILES</th>
+                </tr>
+                <!-- Second row is mostly empty except for 2020, 2021 -->
+                <tr>
+                  <th scope="col">2020</th>
+                  <th scope="col">2021</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- row 1 -->
+                  <th scope="row" rowspan="2">Cross country</th>
+                  <th scope="row">Trek Fuel EX 7</th>
+                  <td>367</td>
+                  <td>102</td>
+                  <td>41</td>
+                  <td>16</td>
+                  <td>6</td>
+                  <td>0</td>
+                  <td class="summary">532</td>
+                </tr>
+                <tr>
+                  <!-- row 2 -->
+                  <th scope="row">Stumpjumper FSR Comp 6 Fattie</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>19</td>
+                  <td>771</td>
+                  <td>428</td>
+                  <td>0</td>
+                  <td class="summary">1218</td>
+                </tr>
+                <tr>
+                  <!-- row 3 -->
+                  <th scope="row">Downhill</td>
+                  <th scope="row">Santa Cruz Tallboy</td>
+                  <td>0</td>
+                  <td>0</td>      
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>41</td>
+                  <td class="summary">41</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <!-- Summary final row -->
+                <th scope="row" colspan="2">TOTAL MILES</th>
+                <td>367</td>
+                <td>102</td>
+                <td>60</td>
+                <td>787</td>
+                <td>434</td>
+                <td>41</td>
+                <td class="summary">1791</td>
+              </tfoot>
+            </table>
+            <br/><br/>
+            </section>
+          
+        <section id="section8" class="bg-white p-6 rounded-md shadow-md">
+            <strong>Ad:</strong><br/>
+            <iframe src="https://ryanrosario.phd/teaching/ucla/24s/cs144/ad.php" width="50%" height="300px" />
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-4 rounded-md shadow-md mt-8">
+        <p>&copy; 2025 HTML5 Showcase. All rights reserved.</p>
+    </footer>
+</body>
+</html>
