@@ -1,0 +1,237 @@
+/* Reset some basic elements */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Example container */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* (1) Single tag selector */
+h2 {
+  color: #2c3e50;
+  margin: 15px 0 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+/* (2) Two tag selectors as OR (comma) */
+h3, h4 {
+  color: #3498db;
+  margin-top: 10px;
+}
+
+/* (3) Class selector */
+.highlight {
+  background-color: #ffffcc;
+  padding: 3px;
+}
+
+/* (4) Tag and class selector together */
+p.intro {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* (5) Setup for a <p> tag that uses multiple classes independently */
+.text-red {
+  color: #e74c3c;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+/* (6) Multiple class selector (elements with both classes) */
+.box.special {
+  border: 2px solid #9b59b6;
+  background-color: #ecf0f1;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* (7) Element selector with multiple classes */
+div.box.container-sm {
+  max-width: 500px;
+  margin: 10px auto;
+  background-color: #d5f5e3;
+}
+
+/* (8) ID selector */
+#unique-element {
+  background-color: #34495e;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+/* (9) Attribute selector */
+[role] {
+  border-left: 3px solid #3498db;
+  padding-left: 10px;
+}
+
+/* (10) Multiple attribute selectors */
+[role][lang] {
+  font-style: italic;
+}
+
+/* (11) Attribute selector with a value */
+[role="note"] {
+  background-color: #fdf2e9;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* (12) Attribute selector with a value and [] */
+[data-level="2"] {
+  border-left: 4px solid #e74c3c;
+}
+
+/* (13) Attribute selector where we check using a string */
+[class="demo-class"] {
+  font-variant: small-caps;
+}
+
+/* (14) Attribute selector requiring ~= (contains word) */
+[class~="tag"] {
+  text-decoration: underline;
+}
+
+/* (15) Attribute selector requiring *= (contains substring) */
+[class*="item"] {
+  letter-spacing: 1px;
+}
+
+/* (16) Attribute selector requiring ^= (starts with) */
+[class^="btn"] {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #2ecc71;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* (17) Attribute selector requiring $= (ends with) */
+[class$="warning"] {
+  background-color: #f39c12;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+/* (18) Attribute selector requiring |= (starts with exact value or value followed by -) */
+p[lang|="en"] {
+  color: #16a085;
+}
+
+/* (19) Multiple tags, descendant (space) */
+section p {
+  margin: 8px 0;
+  color: #555;
+}
+
+/* (20) Target tags that descend from a class */
+.content span {
+  font-weight: 600;
+  color: #27ae60;
+}
+
+/* (21) Target a child (>) */
+.parent > span {
+  text-decoration: underline;
+  color: #d35400;
+}
+
+/* (22) Target the next sibling/bro/sister (+) */
+/* Think of as "next youngest" sibling if you wish */
+h4 + p {
+  font-style: italic;
+  color: #8e44ad;
+}
+
+/* (23) Target using ~ (younger sibling) */
+h3 ~ p {
+  text-indent: 20px;
+}
+
+/* (24) Link states and combinations */
+a:link {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #9b59b6;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:link:hover {
+  color: #2980b9;
+}
+
+a:visited:hover {
+  color: #8e44ad;
+}
+
+/* (25) nth-child selectors */
+li:nth-child(2) {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+li:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* (26) Pseudo-elements */
+p.special::first-letter {
+  font-size: 24px;
+  font-weight: bold;
+  color: #c0392b;
+}
+
+p.special::first-line {
+  font-variant: small-caps;
+}
+
+.fancy::before {
+  content: "★ ";
+  color: gold;
+}
+
+.fancy::after {
+  content: " ★";
+  color: gold;
+}

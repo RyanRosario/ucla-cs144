@@ -1,0 +1,37 @@
+html {
+	font-family: sans-serif;
+	font-size: 16px;
+}
+
+h1 {
+	color: silver;
+}
+
+.warning {
+	font-weight: bold;
+	font-style: italic;
+	color: black;
+}
+
+.urgent {
+	font-style: italic;
+}
+
+/* Inherits from warning and urgent */
+.warning.urgent {
+	background-color: silver;
+	color: red;
+}
+
+#comments {
+	font-weight: bold;
+	color: silver;
+}
+
+#comments ~ p {
+	padding-left: 20px;
+	font-family: Monospace;
+	font-style: italic;
+	color: black;
+	font-size: 0.8em;
+}

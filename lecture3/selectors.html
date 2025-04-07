@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Selectors Example</title>
+  <link rel="stylesheet" href="selectors.css">
+</head>
+<body>
+  <div class="container">
+    <h1>CSS Selectors Examples</h1>
+    
+    <!-- Single tag selector (h2) -->
+    <h2>Basic Selectors</h2>
+    
+    <!-- Two tag selectors as OR (h3, h4) -->
+    <h3>Type & Class Selectors</h3>
+    <h4>ID & Attribute Selectors</h4>
+    
+    <!-- Class selector (.highlight) -->
+    <p>This is normal text and <span class="highlight">this is highlighted text</span> using a class selector.</p>
+    
+    <!-- Tag and class selector (p.intro) -->
+    <p class="intro">This paragraph uses the intro class, which is specifically styled for p tags.</p>
+    
+    <!-- P tag using multiple classes independently -->
+    <p class="text-red">This text is red.</p>
+    <p class="text-bold">This text is bold.</p>
+    <p class="text-italic">This text is italic.</p>
+    <p class="text-red text-bold text-italic">This text is red, bold, and italic.</p>
+    
+    <!-- Multiple class selector (.box.special) -->
+    <div class="box">Just a regular box</div>
+    <div class="box special">A special box using multiple class selector</div>
+    
+    <!-- Element selector with multiple classes -->
+    <div class="box container-sm">A small container box</div>
+    
+    <!-- ID selector (#unique-element) -->
+    <div id="unique-element">This element has a unique ID and is styled accordingly.</div>
+    
+    <!-- Attribute selector ([role]) -->
+    <div role="note">This element has the role attribute and gets a border.</div>
+    
+    <!-- Multiple attribute selectors ([role][lang]) -->
+    <div role="note" lang="en">This element has both role and lang attributes.</div>
+    
+    <!-- Attribute selector with a value ([role="note"]) -->
+    <div role="note">This element has role="note" and gets special styling.</div>
+    
+    <!-- Attribute selector with a value and [] ([data-level="2"]) -->
+    <div data-level="2">This element has a data-level attribute with value 2.</div>
+    
+    <!-- Attribute selector where we check using a string ([class="demo-class"]) -->
+    <div class="demo-class">This element has exactly the class "demo-class".</div>
+    
+    <!-- Attribute selector requiring ~= ([class~="tag"]) -->
+    <div class="some tag class">This element has "tag" as one of its space-separated class values.</div>
+    
+    <!-- Attribute selector requiring *= ([class*="item"]) -->
+    <div class="list-item-container">This element has "item" somewhere in its class value.</div>
+    
+    <!-- Attribute selector requiring ^= ([class^="btn"]) -->
+    <span class="btn-primary">Button styled element</span>
+    
+    <!-- Attribute selector requiring $= ([class$="warning"]) -->
+    <span class="message-warning">Warning message</span>
+    
+    <!-- Attribute selector requiring |= ([lang|="en"]) -->
+    <div class="language-example">
+        <p lang="en" class='english'>English text.</p>
+        <p lang="en-US" class="us en" >American English text.</p>
+    </div>
+    
+    <!-- Multiple tags, descendant (space) (section p) -->
+    <section>
+      <p>This paragraph is inside a section element.</p>
+      <div>
+        <p>This paragraph is deeper inside a section element.</p>
+      </div>
+    </section>
+    
+    <!-- Target tags that descend from a class (.content span) -->
+    <div class="content">
+      <p>This is content with a <span>highlighted span</span> inside it.</p>
+    </div>
+    
+    <!-- Target a direct descendant (>) (.parent > span) -->
+    <div class="parent">
+      <span>This is a direct child span.</span>
+      <div>
+        <span>This is not a direct child span.</span>
+      </div>
+    </div>
+    
+    <!-- Target a direct sibling (+) (h4 + p) -->
+    <h4>Sibling Example</h4>
+    <p>This paragraph is a direct sibling of the h4 above.</p>
+    <p>This paragraph is not a direct sibling of the h4.</p>
+    
+    <!-- Target using ~ (general sibling) (h3 ~ p) -->
+    <h3>General Siblings Example</h3>
+    <p>This is a paragraph following the h3.</p>
+    <div>Some divider</div>
+    <p>This paragraph is also affected by the general sibling selector.</p>
+    
+    <!-- Link states -->
+    <p>
+      <a href="https://example.com">This is a link to example.com</a>
+    </p>
+    
+    <!-- nth-child examples -->
+    <ul>
+      <li>First item</li>
+      <li>Second item (styled with nth-child(2))</li>
+      <li>Third item</li>
+      <li>Fourth item (even)</li>
+      <li>Fifth item</li>
+      <li>Sixth item (even)</li>
+    </ul>
+    
+    <!-- Pseudo-elements -->
+    <p class="special">This paragraph has a special first letter and first line styling. The quick brown fox jumps over the lazy dog.</p>
+    
+    <p class="fancy">This element has decorative content before and after.</p>
+  </div>
+</body>
+</html>
