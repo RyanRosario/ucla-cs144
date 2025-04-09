@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>overflow-wrap Demo</title>
+  <style>
+    .container {
+      width: 200px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .normal {
+      overflow-wrap: normal;
+    }
+
+    .break-word {
+      overflow-wrap: break-word;
+    }
+
+    .anywhere {
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+  <h2>overflow-wrap: normal</h2>
+  <div class="container normal">
+    Supercalifragilisticexpialidocious despite-the-efforts-of-all-involved
+  </div>
+
+  <h2>overflow-wrap: break-word</h2>
+  <div class="container break-word">
+    Supercalifragilisticexpialidocious despite-the-efforts-of-all-involved
+  </div>
+
+  <h2>overflow-wrap: anywhere</h2>
+  <div class="container anywhere">
+    Supercalifragilisticexpialidocious despite-the-efforts-of-all-involved
+  </div>
+</body>
+</html>
+

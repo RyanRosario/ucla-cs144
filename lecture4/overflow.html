@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		div {
+			height: 200px;
+			width: 600px;
+			background-color: cyan;
+			font-size: 2rem;
+			margin-bottom: 100px; /* Why do we need this? */
+		}
+
+		.ww {
+			height: 400px;
+			width: 200px;
+			background-color: yellow;
+			font-size: 2rem;
+		}
+
+		.ww2 {
+			height: 200px;
+			width: 400px;
+			background-color: yellow;
+			font-size: 2rem;
+		}
+	</style>
+</head>
+<body>
+	<h1>Overflowing Container Demo</h1>
+	<h2>Simple Text</h2>
+	<h3><code>overflow: visible;</code></h3>
+	<div style="overflow: visible;">
+	If I had a world of my own, everything would be nonsense. Nothing would be what it is, because everything would be what it isn't. And contrary wise, what is, it wouldn't be. And what it wouldn't be, it would. You see? -- Alice's Adventures in Wonderland / Through the Looking Glass, Lewis Carroll
+	</div>
+
+	<h3><code>overflow: hidden;</code></h3>
+	<div style="overflow: hidden;">
+	If I had a world of my own, everything would be nonsense. Nothing would be what it is, because everything would be what it isn't. And contrary wise, what is, it wouldn't be. And what it wouldn't be, it would. You see? -- Alice's Adventures in Wonderland / Through the Looking Glass, Lewis Carroll
+	</div>
+
+	<h3><code>overflow: scroll;</code></h3>
+	<div style="overflow: scroll;">
+	If I had a world of my own, everything would be nonsense. Nothing would be what it is, because everything would be what it isn't. And contrary wise, what is, it wouldn't be. And what it wouldn't be, it would. You see? -- Alice's Adventures in Wonderland / Through the Looking Glass, Lewis Carroll
+	</div>
+
+	<h3><code>overflow: auto;</code></h3>
+	<div style="overflow: scroll;">
+	This div does not need a scroll bar since the text fits, but it would show a scroll bar if
+	the text overflowed.
+	</div>
+
+	<h2>Word Wrap</h2>
+	<h3><code>overflow-wrap: normal;</code></h3>
+	<div class="ww" style="overflow-wrap: normal;">
+	Every human bean is diddly and different. Some is scrumdiddlyumptious and some is uckyslush. -- The BFG, Roald Dahl
+	</div>
+
+	<h3><code>overflow-wrap: anywhere;</code></h3>
+	<div class="ww" style="overflow-wrap: anywhere;">
+	Every human bean is diddly and different. Some is scrumdiddlyumptious and some is uckyslush. -- The BFG, Roald Dahl
+	</div>
+
+	<h3><code>overflow-wrap: break-word;</code></h3>
+	<div class="ww2" style="overflow-wrap: break-word;">
+	Every human bean is diddly and different. Some is scrumdiddlyumptious and some is uckyslush. -- The BFG, Roald Dahl
+	</div>
+
+
+</body>
+</html>

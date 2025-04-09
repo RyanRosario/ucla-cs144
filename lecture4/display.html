@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>CS 144 CSS Display Properties</title>
+	<style>
+		body {
+			font-size: 2rem;
+		}
+		h2 {
+			margin-botton: 500px;
+		}
+		.threedivsib {
+			vertical-align:top;
+		}
+		/*.threedivsb {
+			display: block;  
+			height:200px;
+			width:400px;
+		}*/
+		.threedivs .green {
+			background-color: green;
+			color: white;
+			/*height:260px;*/
+			width:600px;
+
+		}
+		.threedivs .blue {
+			background-color: blue;
+			color: white;
+			/*height:150px;*/
+			width:600px;
+		}
+		.threedivs .red {
+			background-color: red;
+			/*height:180px;*/
+			width:600px;
+		}
+
+		.threedivsi .green {
+			display:inline; 
+			background-color: green;
+			color: white;
+			height:200px;
+			width:400px;
+
+		}
+		.threedivsi .blue {
+			display:inline;
+			background-color: blue;
+			color: white;
+			height:200px;
+			width:400px;
+		}
+		.threedivsi .red {
+			display: inline;
+			background-color: red;
+			height:200px;
+			width:400px;
+		}
+		.threedivsib .green {
+			display:inline-block;
+			vertical-align:top;
+			background-color: green;
+			color: white;
+			height:300px;
+			width:500px;
+
+		}
+		.threedivsib .blue {
+			display:inline-block;
+			vertical-align:top;
+			background-color: blue;
+			color: white;
+			height:200px;
+			width:400px;
+		}
+		.threedivsib .red {
+			display: inline-block;
+			vertical-align:top;
+			background-color: red;
+			height:250px;
+			width:420px;
+		}
+
+		.threespansb span {
+			display: block;
+			background-color:rebeccapurple;
+			color: white;
+			height: 2em;
+		}
+
+		.threespansib span {
+			display: inline-block;
+			background-color:rebeccapurple;
+			color: white;
+			height: 2em;
+		}
+
+		.threespans span {
+			background-color:rebeccapurple;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+		<div class="threedivs">
+		<h2>Block Elements as <code>display: block;</code></h2>
+		<div class="green">
+Come with me and you'll be<br/>
+In a world of pure imagination<br/>
+Take a look and you'll see<br/>
+Into your imagination<br/>
+We'll begin with a spin<br/>
+Travelling in the world of my creation<br/>
+What we'll see will defy explanation
+		</div>
+		<div class="red">
+If you want to view paradise<br/>
+Simply look around and view it<br/>
+Anything you want to, do it<br/>
+Want to change the world?<br/>
+There's nothing to it
+		</div>
+		<div class="blue">
+There is no life I know<br/>
+To compare with pure imagination<br/>
+Living there you'll be free<br/>
+If you truly wish to be
+		</div>
+	-- "Pure Imagination", Willy Wonka and the Chocolate Factory (1971)
+	</div>
+
+	</div>
+		<div class="threedivsi">
+			<h2>Block Elements as <code>display: Inline;</code></h2>
+		<div class="green">
+Come with me and you'll be
+In a world of pure imagination
+Take a look and you'll see
+Into your imagination
+We'll begin with a spin
+Travelling in the world of my creation
+What we'll see will defy explanation
+		</div>
+		<div class="red">
+If you want to view paradise
+Simply look around and view it
+Anything you want to, do it
+Want to change the world?
+There's nothing to it
+		</div>
+		<div class="blue">
+There is no life I know
+To compare with pure imagination
+Living there you'll be free
+If you truly wish to be
+		</div>
+			<div>-- "Pure Imagination", Willy Wonka and the Chocolate Factory (1971)</div>
+
+	</div>
+
+
+
+	<div class="threedivsib">
+		<h2>Block Elements as <code>display: inline-block;</code></h2>
+		<div class="green">
+Come with me and you'll be<br/>
+In a world of pure imagination<br/>
+Take a look and you'll see<br/>
+Into your imagination<br/>
+We'll begin with a spin<br/>
+Travelling in the world of my creation<br/>
+What we'll see will defy explanation
+		</div>
+		<div class="red">
+If you want to view paradise<br/>
+Simply look around and view it<br/>
+Anything you want to, do it<br/>
+Want to change the world?<br/>
+There's nothing to it
+		</div>
+		<div class="blue">
+There is no life I know<br/>
+To compare with pure imagination<br/>
+Living there you'll be free<br/>
+If you truly wish to be
+		</div>
+			<div>-- "Pure Imagination", Willy Wonka and the Chocolate Factory (1971)</div>
+
+<div class="threespans">
+	<h2>Inline Element as <code>display: inline;</code></h2>
+	<span>This is a span.</span><span>This is another span.</span><span>This is yet another span.</span>
+</div>
+
+<div class="threespansb">
+	<h2>Inline Element as <code>display: block</code></h2>
+	<span>This is a span.</span><span>This is another span.</span><span>This is yet another span.</span>
+</div>
+
+<div class="threespansib">
+	<h2>Inline Element as <code>display: inline-block</code></h2>
+	<span>This is a span.</span><span>This is another span.</span><span>This is yet another span.</span>
+</div>
+
+</body>
+</html>

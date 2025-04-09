@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Positioning Demo</title>
+  <style>
+    body {
+      height: 2000px;
+      font-family: sans-serif;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+
+    .box {
+      width: 250px;
+      height: 120px;
+      background: lightblue;
+      border: 4px solid #000;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 1.1rem;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .static {
+      position: static;
+    }
+
+    .relative {
+      position: relative;
+      top: 20px;
+      left: 20px;
+      background: lightgreen;
+    }
+
+    .relative::before {
+      content: "original flow position → ";
+      position: absolute;
+      top: -25px;
+      left: 0;
+      font-size: 0.9rem;
+      color: darkgreen;
+    }
+
+    /*.absolute-wrapper {
+      position: relative;
+      height: 260px;
+      border: 3px dashed #888;
+      margin-bottom: 40px;
+      background: #f9f9f9;
+      padding: 10px;
+    }
+
+    .absolute {
+      position: absolute;
+      top: 30px;
+      left: 100px;
+      background: crimson;
+      color: white;
+      font-weight: bold;
+      transform: rotate(-2deg);
+    }
+
+    .absolute::before {
+      content: "offset from container → ";
+      position: absolute;
+      top: -25px;
+      left: -100px;
+      font-size: 0.9rem;
+      color: darkred;
+    }*/
+
+    .absolute-wrapper {
+      position: relative;
+      height: 240px;
+      border: 3px dashed #888;
+      margin-bottom: 40px;
+      background: #f9f9f9;
+      padding: 10px;
+    }
+
+    .absolute {
+      position: absolute;
+      top: 30px;
+      left: 100px;
+      background: crimson;
+      color: white;
+      font-weight: bold;
+      transform: rotate(-2deg);
+      z-index: 10;
+    }
+
+    .fixed {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: gold;
+      z-index: 1000;
+      color: black;
+      font-weight: bold;
+      border-radius: 6px;
+      padding: 15px;
+    }
+
+    .sticky-container {
+      height: 400px;
+      overflow-y: scroll;
+      border: 3px solid purple;
+      margin-top: 40px;
+    }
+
+
+    .sticky-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    .sticky-table th,
+    .sticky-table td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .sticky-table th {
+      position: sticky;
+      top: 0;
+      background: hotpink;
+      color: white;
+      z-index: 1;
+    }
+
+    .scroll-container {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 3px solid purple;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="label">Static</div>
+  <div class="box static">position: static (default)</div>
+
+  <div class="label">Relative</div>
+  <div class="box relative">position: relative<br>(offset by top/left)</div>
+  <div class="box">sibling of relative</div>
+
+  <div class="label">Absolute</div>
+  <div class="absolute-wrapper">
+    <div class="box absolute">position: absolute<br>(relative to wrapper)</div>
+    <div class="box">sibling of absolute</div>
+  </div>
+
+  <div class="label">Fixed</div>
+  <div class="box fixed">position: fixed<br>(always in top-right)</div>
+
+  
+  <div class="label">Sticky (table header)</div>
+  <div class="scroll-container">
+    <table class="sticky-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Apples</td><td>10</td><td>$2.00</td></tr>
+        <tr><td>Bananas</td><td>5</td><td>$1.50</td></tr>
+        <tr><td>Cherries</td><td>8</td><td>$3.20</td></tr>
+        <tr><td>Dates</td><td>12</td><td>$2.80</td></tr>
+        <tr><td>Eggplants</td><td>4</td><td>$1.10</td></tr>
+        <tr><td>Figs</td><td>7</td><td>$2.70</td></tr>
+        <tr><td>Grapes</td><td>9</td><td>$3.00</td></tr>
+        <tr><td>Honeydew</td><td>3</td><td>$3.90</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
+
