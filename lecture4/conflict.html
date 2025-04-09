@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Cascade Conflict Example</title>
+  <style>
+    /* Low specificity */
+    p {
+      color: blue;
+    }
+
+    /* Medium specificity */
+    .highlight {
+      color: red;
+    }
+
+    /* High specificity — this one wins */
+    #urgent {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- This paragraph will be green due to the highest specificity (#urgent) -->
+  <p class="highlight" id="urgent">
+    This paragraph is affected by conflicting styles. The ID selector wins.
+  </p>
+
+</body>
+</html>
