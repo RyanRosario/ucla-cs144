@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head><title>Event Example</title>
+	<link rel="stylesheet"type="text/css" href="colors.css">
+</head>
+<body>Click me!
+<script>
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+function changeColor(event) {
+	let colors = [ "red", "green", "blue", "purple", "orange", "pink" ];
+	document.body.className = colors[getRandomInt(6)];
+}
+document.body.addEventListener("click", changeColor);
+</script>
+</body>
+</html>
+
+<!-- SHOW: inspect element, Elements, Event Listeners
+Show how to debug
+
+DOM breakpoints
+Break On -> Attribute change.
+Show that we are taken to the exact moment the change is made
+-->

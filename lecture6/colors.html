@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Event Example</title>
+	<link rel="stylesheet"type="text/css" href="colors.css">
+<script>
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+function changeColor(event) {
+	let colors = [ "red", "green", "blue", "purple", "orange", "pink" ];
+	document.body.className = colors[getRandomInt(6)];
+}
+document.body.addEventListener("click", changeColor);
+
+</script>
+</head>
+<body>Click me!
+</body></html>
