@@ -1,7 +1,7 @@
-{
+ {
   "name": "socket-chatroom",
   "version": "1.0.0",
-  "description": "A simple Socket.io based chat room application for students",
+  "description": "A simple Socket.io based chat room demo for students",
   "main": "app.js",
   "type": "module",
   "scripts": {

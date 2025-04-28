@@ -1,4 +1,4 @@
-// Server-side code (app.js)
+// Server-side code (app.js) for chat
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';

@@ -1,4 +1,4 @@
-# Socket.io Chat Room Application
+# Socket.io Chat Room Demo
 
 A simple real-time chat application using Socket.io and Express that allows users to join different course-specific chat rooms.
 
