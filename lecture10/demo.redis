@@ -1,0 +1,104 @@
+# CS144 - SPRING 2025 - LECTURE 10 - REDIS DEMO
+
+# Set a key
+SET foo 1
+
+# Increment the value
+INCR foo 		(good for counters)
+GET foo
+
+# Retrieve a missing key.
+GET bar
+
+# Increment by another value
+INCRBY foo 100
+GET foo
+
+# Expire this key/value pair after 1 hour.
+EXPIRE foo 60		# Great for caching.
+
+# Does the key exist?
+EXISTS foo	(returns 1 or 0)
+
+# Get the value for key
+GET foo
+
+
+# Set values for multiple keys
+MSET bar 42 baz 11
+
+# Get values for multiple keys.
+MGET bar baz		# (nil) is none
+
+# Let's check up on our cached key.
+GET FOO
+
+##### Strings
+
+# Create a key/value pair, where value is a string.
+SET username ryanrosario
+GETRANGE username 4 11		# indexed from 0. Same as SUBSTR
+APPEND username _teaches_cs143
+GET username
+STRLEN username
+
+
+
+# List values.
+# Doesn't have to be defined beforehand
+LPUSH words man
+LPUSH words woman
+LPUSH words person
+RPUSH words camera
+RPUSH words tv
+
+$ Get the list length.
+LLEN words
+
+# Get the words in order.
+LRANGE words 0 4
+
+# Pop from either side of the list. Can use as a dequeue, queue or stack.
+LPOP words
+RPOP words
+RPOP words
+RPOP words
+RPOP words
+RPOP words   # no error
+
+# Sets
+# Tropical fruits in smoothie 1
+SADD fruits1 coconut
+SADD fruits1 pineapple guava avocado
+
+# Tropical fruits in smoothie 2
+SADD fruits2 pitaya orange guava pineapple
+
+# What fruits are in both?
+SINTER fruits1 fruits2
+
+# What fruits do I need to buy to make both?
+SUNION fruits1 fruits2
+
+# Shopping list
+SUNIONSTORE shopping fruits1 fruits2
+
+# Get all members
+SMEMBERS shopping
+
+# Get a random set element
+SRANDMEMBER shopping
+
+# Create a hash (dictionary)
+HSET professor firstname ryan lastname rosario university ucla
+HGET professor university
+
+# List all the keys
+KEYS *
+
+# Delete some keys we created
+DEL foo username counts fruits
+
+# Clean up
+FLUSHDB
+FLUSHALL
