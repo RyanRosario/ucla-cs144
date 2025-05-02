@@ -1,4 +1,4 @@
-// NOTHING TO DO HERE
+// NOTHING TO DO HERE EXCEPT CHANGE USERNAME/PASSWORD/DEBUG
 
 import mongoose from 'mongoose';
 import { createClient } from 'redis';
@@ -6,9 +6,20 @@ import { createClient } from 'redis';
 // Database configuration
 export const DB_NAME = 'mammothdb';
 export const COLLECTION = 'mammoth';
+export const MONGO_PORT = '27017';
 export const DEBUG = true;
-const MONGO_ADDRESS = DEBUG ? 'localhost' : 'cs144.org';
-export const MONGO_URI = `mongodb://${MONGO_ADDRESS}:27017/mammothdb`;
+
+const PROTOCOL = 'mongodb://';
+const MONGO_USER = '';
+const MONGO_PASS = '';
+const mongoHost = DEBUG ? 'localhost' : 'cs144.org';
+
+const mongoLogin = MONGO_USER && MONGO_PASS ? `${MONGO_USER}:${MONGO_PASS}` : '';
+const mongoHostPort = MONGO_PORT ? `${mongoHost}:${MONGO_PORT}/${DB_NAME}` : `${mongoHost}/${DB_NAME}`;
+
+export const mongoUri = DEBUG
+  ? `${PROTOCOL}${mongoHostPort}`
+  : `${PROTOCOL}${mongoLogin ? `${mongoLogin}@` : ''}${mongoHostPort}`;
 
 // Redis configuration
 export const REDIS_PREFIX = 'mammoth:';
@@ -25,7 +36,7 @@ export const redisClient = createClient(redisOptions);
 // Connect to MongoDB
 export const connectToMongoDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(mongoUri);
     console.log('Connected to MongoDB');
     return true;
   } catch (err) {
