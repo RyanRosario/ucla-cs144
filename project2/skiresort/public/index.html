@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ski Patrol Admin Dashboard</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    h1, h2, h3 {
+      margin-bottom: 1rem;
+    }
+    .control-box {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      background: white;
+      margin-bottom: 1rem;
+    }
+    #statusRadios {
+      padding: 5px;
+    }
+    select, button, input[type="text"] {
+      margin-top: 0.5rem;
+      margin-right: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    label {
+      margin-right: 1rem;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+    .tab-btn {
+      background: #e0e0e0;
+      border: none;
+      padding: 10px 20px;
+      margin-right: 5px;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .tab-btn.active {
+      background: #2196F3;
+      color: white;
+    }
+    .tab-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .tab-panel {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .pagination-info {
+      font-size: 14px;
+      color: #666;
+      margin-left: auto;
+      margin-right: 1rem;
+    }
+    .arrow {
+      background: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .arrow:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .card-container {
+      flex-grow: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .grid-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-auto-rows: 80px; /* Fixed height for rows */
+      gap: 15px;
+      padding: 10px;
+      align-content: start; /* Key fix: align grid to top */
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+    .card-grid.current {
+      transform: translateX(0);
+    }
+    .card-grid.next {
+      transform: translateX(100%);
+    }
+    .card-grid.prev {
+      transform: translateX(-100%);
+    }
+    .card {
+      border-radius: 8px;
+      color: white;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      height: 80px; /* Fixed height for cards */
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      z-index: 2;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 0 0 3px;
+      z-index: -1;
+    }
+    .card:hover::before {
+      opacity: 0.3;
+    }
+    .card.green::before { box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5); }
+    .card.red::before { box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.5); }
+    .card.blue::before { box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.5); }
+    .card.yellow::before { box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.5); }
+    
+    .card:hover.green { background-color: rgba(76, 175, 80, 0.8); }
+    .card:hover.red { background-color: rgba(244, 67, 54, 0.8); }
+    .card:hover.blue { background-color: rgba(33, 150, 243, 0.8); }
+    .card:hover.yellow { background-color: rgba(255, 193, 7, 0.8); }
+    
+    .card .timestamp {
+      font-size: 0.8rem;
+      margin-top: auto;
+    }
+    .green { background-color: #4CAF50; }
+    .red { background-color: #F44336; }
+    .blue { background-color: #2196F3; }
+    .yellow { background-color: #FFC107; color: black; }
+    .purple { background-color: rebeccapurple}
+    .orange { background-color: orange; }
+    .row {
+      display: flex;
+      align-items: center;
+    }
+    .row .name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
+    }
+    
+    /* Popup styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .popup-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 50%;
+      max-width: 600px;
+      max-height: 80%;
+      overflow: auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transform: scale(0.8) translateY(50px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+    .popup-overlay.active .popup-card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .popup-header {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+    }
+    .popup-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .popup-title {
+      font-size: 1.8rem;
+      margin: 0;
+      flex-grow: 1;
+    }
+    .popup-difficulty {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .popup-section {
+      margin-bottom: 20px;
+    }
+    .popup-section h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .popup-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    .popup-close:hover {
+      color: #000;
+    }
+    .feature-item {
+      font-style: italic;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .no-features {
+      font-style: italic;
+      color: #666;
+    }
+    .nav-container input[type="text"] {
+      margin-left: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <h1>Ski Patrol Admin Dashboard</h1>
+
+    <div class="control-box">
+      <h2>Modify a Condition</h2>
+      <select id="entitySelect"></select>
+      <div id="statusRadios">
+        <!-- Radio buttons will be dynamically generated based on selection -->
+      </div>
+      <button id="submitButton">Submit</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="trail">Trails</button>
+      <button class="tab-btn" data-tab="lift">Lifts</button>
+    </div>
+
+    <div class="tab-content">
+      <div id="trails-tab" class="tab-panel">
+        <div class="nav-container">
+          <h2>Trails</h2>
+          <input type="text" id="trailSearch" placeholder="Search Trails...">
+          <div class="pagination-info" id="trailPagination"></div>
+          <div>
+            <button class="arrow" id="trailPrev">&lt;</button>
+            <button class="arrow" id="trailNext">&gt;</button>
+          </div>
+        </div>
+        <div class="card-container" id="trailContainer">
+          <div class="grid-wrapper" id="trailGridWrapper"></div>
+        </div>
+      </div>
+
+      <div id="lifts-tab" class="tab-panel" style="display: none;">
+        <div class="nav-container">
+          <h2>Lifts</h2>
+          <input type="text" id="liftSearch" placeholder="Search Lifts...">
+          <div class="pagination-info" id="liftPagination"></div>
+          <div>
+            <button class="arrow" id="liftPrev">&lt;</button>
+            <button class="arrow" id="liftNext">&gt;</button>
+          </div>
+        </div>
+        <div class="card-container" id="liftContainer">
+          <div class="grid-wrapper" id="liftGridWrapper"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Popup Overlay -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card" id="popupCard">
+      <button class="popup-close" id="popupClose">&times;</button>
+      <div class="popup-content" id="popupContent">
+        <!-- Popup content will be injected here -->
+      </div>
+    </div>
+  </div>
+
+<script>
+let trailData = [];
+let liftData = [];
+let filteredTrailData = [];
+let filteredLiftData = [];
+let currentPage = { trail: 0, lift: 0 };
+let isAnimating = false;
+let refreshInterval;
+
+// Define status options for trails and lifts
+const statusOptions = {
+  trail: [
+    { value: 'OPEN', label: 'Open' },
+    { value: 'CLOSED', label: 'Closed' },
+    { value: 'CLOSED FOR THE SEASON', label: 'Closed for the Season' },
+    { value: 'NOT PATROLLED', label: 'Not Patrolled' }
+  ],
+  lift: [
+    { value: 'OPEN', label: 'Open' },
+    { value: 'CLOSED', label: 'Closed' },
+    { value: 'CLOSED FOR THE SEASON', label: 'Closed for the Season' },
+    { value: 'EXPECTED', label: 'Expected' },
+    { value: 'DELAYED', label: 'Delayed' },
+    { value: 'WEATHER HOLD', label: 'Weather Hold' },
+    { value: 'WIND HOLD', label: 'Wind Hold' },
+    { value: 'NO FOOT PASSENGERS', label: 'No Foot Passengers' }
+  ]
+};
+
+// Web Storage API functions
+function saveTabSelection(tabName) {
+  // TODO: Save the tab selection using Web Storage API
+}
+
+function loadTabSelection() {
+  // TODO: Load the tab selection using Web Storage API
+}
+
+// New functions for saving form state
+function saveFormState(entityValue, statusValue) {
+  if (entityValue) {
+    localStorage.setItem('selectedEntity', entityValue);
+  }
+  if (statusValue) {
+    localStorage.setItem('selectedStatus', statusValue);
+  }
+}
+
+function loadFormState() {
+  return {
+    entity: localStorage.getItem('selectedEntity') || '',
+    status: localStorage.getItem('selectedStatus') || ''
+  };
+}
+
+function clearFormState() {
+  localStorage.removeItem('selectedEntity');
+  localStorage.removeItem('selectedStatus');
+}
+
+function getStatusColor(status) {
+  const s = status.toLowerCase();
+  if (s.includes('open')) return 'green';
+  if (s.includes('closed')) return 'red';
+  if (s.includes('expected')) return 'blue';
+  if (s.includes('not patrolled')) return 'yellow';
+  if (s.includes('weather hold')) return 'purple';
+  if (s.includes('wind hold')) return 'orange';
+  if (s.includes('delayed')) return 'pink';
+  if (s.includes('no foot passengers')) return 'brown';
+  return 'yellow';
+}
+
+function getDifficultyIcon(difficulty) {
+  const map = {
+    'Beginner': 'green-circle.svg',
+    'Slightly Difficult': 'blue-square.svg',
+    'Very Difficult': 'black-diamond.svg',
+    'Advanced': 'blue-black-square.svg',
+    'Extremely Difficult': 'double-black-diamond.svg',
+    'Uphill': 'uphill-arrow.svg',
+    'Freestyle Terrain': 'park.svg',
+    'Halfpipe': 'halfpipe.svg',
+    'Adventure Zone': 'purple-star.svg',
+  };
+  const filename = map[difficulty];
+  return filename
+    ? `<img src="/assets/${filename}" alt="${difficulty}" width="24" height="24" style="vertical-align: middle;">`
+    : '⭐';
+}
+
+function getCapacityIcon(capacity) {
+  const map = {
+    3: 'triple_chair.svg',
+    6: 'high_speed_six_chair.svg',
+    2: 'double.svg',
+    4: 'quad_chair.svg',
+    'Gondola': 'gondola.svg'
+  };
+  const filename = map[capacity];
+  return filename
+    ? `<img src="/assets/${filename}" alt="${capacity} Capacity" width="24" height="24" style="vertical-align: middle;">`
+    : '⭐'; // fallback if unknown
+}
+
+function formatTime(timestamp) {
+  if (!timestamp) return 'Not available';
+  try {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  } catch (e) {
+    return timestamp;
+  }
+}
+
+function calculateItemsPerPage(type) {
+  const container = document.getElementById(`${type}Container`);
+  if (!container) return 28;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  const cardWidth = 195; // Adjusted for spacing
+  const cardHeight = 95; // Adjusted for spacing
+  const columns = Math.floor(width / cardWidth);
+  const rows = Math.floor(height / cardHeight);
+  return Math.max(1, columns * rows);
+}
+
+function populateEntitySelect() {
+  const entitySelect = document.getElementById('entitySelect');
+  entitySelect.innerHTML = '<option value="">Select Trail/Lift</option>';
+  
+  // Add trails to dropdown
+  trailData.forEach(trail => {
+    const opt = document.createElement('option');
+    opt.value = `trail:${trail.name}`;
+    opt.textContent = `Trail: ${trail.name}`;
+    entitySelect.appendChild(opt);
+  });
+  
+  // Add lifts to dropdown
+  liftData.forEach(lift => {
+    const opt = document.createElement('option');
+    opt.value = `lift:${lift.name}`;
+    opt.textContent = `Lift: ${lift.name}`;
+    entitySelect.appendChild(opt);
+  });
+  
+  // Restore saved selection if available
+  const formState = loadFormState();
+  if (formState.entity) {
+    entitySelect.value = formState.entity;
+    
+    // Update radio buttons based on selection
+    const [type] = formState.entity.split(':');
+    updateStatusRadios(type, formState.status);
+  }
+}
+
+// Update radio buttons based on entity type
+function updateStatusRadios(entityType, selectedStatus = null) {
+  const statusRadios = document.getElementById('statusRadios');
+  statusRadios.innerHTML = ''; // Clear existing radio buttons
+  
+  // Get the appropriate status options based on entity type
+  const options = statusOptions[entityType] || [];
+  
+  // Create radio buttons
+  options.forEach(option => {
+    const label = document.createElement('label');
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'status';
+    radio.value = option.value;
+    
+    // Set as checked if matches saved status
+    if (selectedStatus && option.value === selectedStatus) {
+      radio.checked = true;
+    }
+    
+    // Add event listener to save state when radio is selected
+    radio.addEventListener('change', function() {
+      if (this.checked) {
+        const entitySelect = document.getElementById('entitySelect');
+        saveFormState(entitySelect.value, this.value);
+      }
+    });
+    
+    label.appendChild(radio);
+    label.appendChild(document.createTextNode(` ${option.label}`));
+    statusRadios.appendChild(label);
+  });
+}
+
+function createGrid(type, pageIndex) {
+    const fullData = type === 'trail' ? trailData : liftData;
+    const filteredData = type === 'trail' ? filteredTrailData : filteredLiftData;
+
+    const data = filteredData.length ? filteredData : fullData;
+
+  const grid = document.createElement('div');
+  grid.className = 'card-grid';
+  
+  const itemsPerPage = calculateItemsPerPage(type);
+  const start = pageIndex * itemsPerPage;
+  const end = Math.min(start + itemsPerPage, data.length);
+
+  for (let i = start; i < end; i++) {
+    const item = data[i];
+    const colorClass = getStatusColor(item.status);
+    const card = document.createElement('div');
+    card.className = `card ${colorClass}`;
+    card.setAttribute('data-type', type);
+    card.setAttribute('data-name', item.name);
+    
+    // Add event listener instead of onclick attribute
+    card.addEventListener('click', function() {
+      showPopup(type, item.name);
+    });
+    
+    if (type === 'trail') {
+      // TRAIL card: no timestamp at all
+      card.innerHTML = `
+        <div class="row" style="height: 100%; justify-content: left; align-items: center;">
+          <div style="display: flex; align-items: center;">
+            <div style="width: 24px; margin-right: 5px;">${getDifficultyIcon(item.difficulty)}</div>
+            <div class="name">${item.name}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      // LIFT card: include timestamp
+      card.innerHTML = `
+    <div class="row">
+      <div class="star" style="width: 24px;">${getCapacityIcon(item.capacity)}</div>
+      <div class="name">${item.name}</div>
+    </div>
+    <div class="timestamp">${formatTime(item.lastUpdated)}</div>
+  `;
+    }
+    grid.appendChild(card);
+  }
+  
+  return grid;
+}
+
+function showPopup(type, name) {
+  const overlay = document.getElementById('popupOverlay');
+  const popupContent = document.getElementById('popupContent');
+
+  // Find the item
+  const data = type === 'trail' ? trailData : liftData;
+  const item = (type === 'trail' ? data : data).find(i => i.name === name);
+
+  if (!item) return;
+
+  const statusColor = getStatusColor(item.status);
+  let popupHTML = '';
+
+  // Create header with name and status
+  popupHTML += `
+    <div class="popup-header">
+      <div class="popup-status ${statusColor}"></div>
+      <h2 class="popup-title">${item.name}</h2>
+    </div>
+  `;
+
+  // Add difficulty icon for trails
+  if (type === 'trail' && item.difficulty) {
+    popupHTML += `
+      <div class="popup-difficulty">
+        <span style="margin-right: 10px;">${getDifficultyIcon(item.difficulty)}</span>
+        <strong>Difficulty:&nbsp;</strong> ${item.difficulty} ${item.symbol ? `(${item.symbol})` : ''}
+      </div>
+    `;
+  }
+
+  // Add status, capacity (for lifts), and last updated
+  popupHTML += `
+    <div class="popup-section">
+      <p><strong>Status:</strong> ${item.status}</p>
+      ${type === 'lift' && item.capacity && item.capacity !== 'Gondola' ? `<p><strong>Capacity:</strong> ${item.capacity}</p>` : ''}
+      ${item.lastUpdated ? `<p><strong>Last Updated:</strong> ${formatTime(item.lastUpdated)}</p>` : ''}
+    </div>
+  `;
+
+  // Add features section
+  popupHTML += `<div class="popup-section"><h3>Features</h3>`;
+
+  if (type === 'trail') {
+    const features = item.features || [];
+    if (features.length > 0) {
+      features.forEach(feature => {
+        popupHTML += `<span class="feature-item">${feature}</span>`;
+      });
+    } else {
+      popupHTML += '<p class="no-features">No features listed for this trail.</p>';
+    }
+  } else {
+    if (item.rideTime) {
+      popupHTML += `<span class="feature-item">Ride Time: ${item.rideTime} minutes</span>`;
+    } else {
+      popupHTML += '<p class="no-features">No ride time information available.</p>';
+    }
+  }
+
+  popupHTML += '</div>';
+
+  // Set the popup content
+  popupContent.innerHTML = popupHTML;
+
+  // Show the popup
+  overlay.classList.add('active');
+}
+
+function closePopup() {
+  const overlay = document.getElementById('popupOverlay');
+  overlay.classList.remove('active');
+}
+
+function renderPageWithTransition(type, page, direction) {
+  // If already animating, don't start another animation
+  if (isAnimating) return;
+  isAnimating = true;
+
+  // Get the grid wrapper
+  const wrapper = document.getElementById(`${type}GridWrapper`);
+  
+  // Keep track of the current grid if it exists
+  const currentGrid = wrapper.querySelector('.current');
+  
+  // Create new grid for the target page
+  const newGrid = createGrid(type, page);
+  
+  // Position the new grid offscreen based on direction
+  if (direction === 'next') {
+    newGrid.classList.add('next');
+  } else if (direction === 'prev') {
+    newGrid.classList.add('prev');
+  } else {
+    newGrid.classList.add('current');
+  }
+  
+  // Add the new grid to the wrapper
+  wrapper.appendChild(newGrid);
+  
+  // Force reflow to ensure the initial position is applied
+  void newGrid.offsetWidth;
+  
+  // If there's an existing grid, animate it out
+  if (currentGrid) {
+    if (direction === 'next') {
+      currentGrid.style.transform = 'translateX(-100%)';
+    } else if (direction === 'prev') {
+      currentGrid.style.transform = 'translateX(100%)';
+    }
+  }
+  
+  // Animate the new grid in
+  newGrid.style.transform = 'translateX(0)';
+  newGrid.classList.add('current');
+  newGrid.classList.remove('next', 'prev');
+  
+  // After animation completes, clean up
+  setTimeout(() => {
+    // Remove the old grid if it exists
+    if (currentGrid && currentGrid !== newGrid) {
+      wrapper.removeChild(currentGrid);
+    }
+    isAnimating = false;
+  }, 500); // Match this to the CSS transition duration
+}
+
+function updatePaginationInfo(type) {
+  const fullData = type === 'trail' ? trailData : liftData;
+  const filteredData = type === 'trail' ? filteredTrailData : filteredLiftData;
+  const theData = filteredData.length ? filteredData : fullData;
+  const data = type === 'trail' ? theData  : theData;
+
+  const itemsPerPage = calculateItemsPerPage(type);
+  const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage));
+  document.getElementById(`${type}Pagination`).textContent =
+    `Page ${currentPage[type] + 1} of ${totalPages} (${data.length} total)`;
+
+  document.getElementById(`${type}Prev`).disabled = (currentPage[type] === 0);
+  document.getElementById(`${type}Next`).disabled = (currentPage[type] >= totalPages - 1);
+}
+
+function handleSearch(type) {
+  const input = document.getElementById(`${type}Search`).value.toLowerCase();
+  if (type === 'trail') {
+    filteredTrailData = trailData.filter(item => item.name.toLowerCase().includes(input));
+    currentPage.trail = 0;
+    renderPageWithTransition('trail', 0);
+    updatePaginationInfo('trail');
+  } else {
+    filteredLiftData = liftData.filter(item => item.name.toLowerCase().includes(input));
+    currentPage.lift = 0;
+    renderPageWithTransition('lift', 0);
+    updatePaginationInfo('lift');
+  }
+}
+
+function prevPage(type) {
+  if (currentPage[type] > 0 && !isAnimating) {
+    currentPage[type]--;
+    renderPageWithTransition(type, currentPage[type], 'prev');
+    updatePaginationInfo(type);
+  }
+}
+
+function nextPage(type) {
+  const fullData = type === 'trail' ? trailData : liftData;
+  const filteredData = type === 'trail' ? filteredTrailData : filteredLiftData;
+  const theData = filteredData.length ? filteredData : fullData;
+  const data = type === 'trail' ? theData : theData;
+  const itemsPerPage = calculateItemsPerPage(type);
+  const maxPage = Math.ceil(data.length / itemsPerPage) - 1;
+
+  if (currentPage[type] < maxPage && !isAnimating) {
+    currentPage[type]++;
+    renderPageWithTransition(type, currentPage[type], 'next');
+    updatePaginationInfo(type);
+  }
+}
+
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.style.display = 'none');
+  document.getElementById(`${tabName}s-tab`).style.display = 'flex';
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+  updatePaginationInfo(tabName);
+  
+  // Get the current page for this tab
+  const currentPageIndex = currentPage[tabName];
+  
+  // Render the current page without transition
+  renderPageWithTransition(tabName, currentPageIndex);
+  
+  document.getElementById(`${tabName}Search`).focus();
+  
+  // Save the tab selection to localStorage
+  saveTabSelection(tabName);
+}
+
+async function fetchAndRender() {
+  try {
+
+    // TODO: Call your REST API to get trail and lift data.
+    
+    // Clear any filtered data
+    filteredTrailData = [];
+    filteredLiftData = [];
+    
+    // Reset pagination
+    currentPage.trail = 0;
+    currentPage.lift = 0;
+    
+    // Populate dropdown menu
+    populateEntitySelect();
+    
+    // Get the current active tab (or the saved one)
+    const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab') || loadTabSelection();
+    
+    // Render pages without transition
+    renderPageWithTransition(activeTab, 0);
+    updatePaginationInfo(activeTab);
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+}
+
+async function submitStatus() {
+  const entity = document.getElementById('entitySelect').value;
+  const status = document.querySelector('input[name="status"]:checked')?.value;
+  if (!entity || !status) {
+    alert('Please select an entity and a status.');
+    return;
+  }
+  const [type, name] = entity.split(':');
+  try {
+    // TODO: Call your REST API to update the status.
+    
+    // Clear the form and local storage state
+    document.getElementById('entitySelect').value = "";
+    document.querySelectorAll('input[name="status"]').forEach(r => r.checked = false);
+    document.getElementById('statusRadios').innerHTML = ''; // Clear radio buttons
+    clearFormState();
+    
+    // Refresh data
+    await fetchAndRender();
+  } catch (error) {
+    console.error('Submit error:', error);
+  }
+}
+
+function startAutoRefresh() {
+  // Clear any existing interval to prevent multiple intervals
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
+  }
+  
+  // Set up a new interval that calls fetchAndRender every 10 seconds
+  refreshInterval = setInterval(fetchAndRender, 10000);
+}
+
+function stopAutoRefresh() {
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
+    refreshInterval = null;
+  }
+}
+
+// Set up all event listeners when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Set the active tab based on saved preference
+  const savedTab = loadTabSelection();
+  if (savedTab) {
+    document.querySelectorAll('.tab-panel').forEach(panel => panel.style.display = 'none');
+    document.getElementById(`${savedTab}s-tab`).style.display = 'flex';
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.tab-btn[data-tab="${savedTab}"]`).classList.add('active');
+  }
+  
+  // Initial data fetch
+  fetchAndRender();
+  
+  // Start auto-refresh
+  startAutoRefresh();
+  
+  // Entity dropdown change handler
+  document.getElementById('entitySelect').addEventListener('change', function() {
+    const entityValue = this.value;
+    if (entityValue) {
+      const [type] = entityValue.split(':');
+      updateStatusRadios(type); // Show appropriate radio buttons
+      
+      // Save the entity selection to localStorage
+      saveFormState(entityValue, null);
+    } else {
+      // Clear radio buttons if no entity is selected
+      document.getElementById('statusRadios').innerHTML = '';
+      clearFormState();
+    }
+  });
+  
+  // Submit button
+  document.getElementById('submitButton').addEventListener('click', submitStatus);
+  
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      switchTab(this.getAttribute('data-tab'));
+    });
+  });
+  
+  // Pagination buttons
+  document.getElementById('trailPrev').addEventListener('click', function() {
+    prevPage('trail');
+  });
+  
+  document.getElementById('trailNext').addEventListener('click', function() {
+    nextPage('trail');
+  });
+  
+  document.getElementById('liftPrev').addEventListener('click', function() {
+    prevPage('lift');
+  });
+  
+  document.getElementById('liftNext').addEventListener('click', function() {
+    nextPage('lift');
+  });
+  
+  // Search inputs
+  document.getElementById('trailSearch').addEventListener('input', function() {
+    handleSearch('trail');
+  });
+  
+  document.getElementById('liftSearch').addEventListener('input', function() {
+    handleSearch('lift');
+  });
+  
+  // Popup close button
+  document.getElementById('popupClose').addEventListener('click', closePopup);
+  
+  // Close popup when clicking outside
+  document.getElementById('popupOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closePopup();
+    }
+  });
+  
+  // Window resize handler
+  window.addEventListener('resize', function() {
+    const activeTab = document.querySelector('.tab-panel[style="display: flex"]');
+    if (!activeTab) return;
+    const type = activeTab.id.includes('trail') ? 'trail' : 'lift';
+    updatePaginationInfo(type);
+    renderPageWithTransition(type, currentPage[type]);
+  });
+});
+</script>
+
+</body>
+</html>
