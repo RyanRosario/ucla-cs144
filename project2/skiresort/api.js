@@ -52,11 +52,9 @@ app.use('/trails', trailRoutes);
 app.use('/graphql', expressMiddleware(server));
 
 // tRPC middleware - mounted at /trpc path
-// if (process.env.ENABLE_TS === 'true') {
-//  app.use('/trpc', createExpressMiddleware({
+// app.use('/trpc', createExpressMiddleware({
 //  router: appRouter,
-//  }));
-// }
+// }));
 
 // Serve static files only if no API route matched (preserved from original)
 const projectRoot = path.join(__dirname);
