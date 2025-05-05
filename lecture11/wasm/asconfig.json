@@ -1,0 +1,12 @@
+{
+  "targets": {
+    "_comment": {"text": "This config is a sample and is not actually used here."},
+    "release": {
+      "outFile": "dist/as-pi.wasm",
+      "optimizeLevel": 3,
+      "shrinkLevel": 1
+    }
+  },
+  "entries": ["src/assembly/index.ts"]
+}
+

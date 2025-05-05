@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript vs. WebAssembly (C, Rust, AssemblyScript)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+        .experiment-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .experiment-box {
+            border-radius: 12px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .experiment-box:hover {
+            transform: translateY(-5px);
+        }
+        .js-box {
+            background-color: #a8e6cf;
+            border: 2px solid #69d1a6;
+        }
+        .c-box {
+            background-color: #ffd3b6;
+            border: 2px solid #ffaa80;
+        }
+        .rust-box {
+            background-color: #ffaaa5;
+            border: 2px solid #ff8a80;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1a2530;
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        .result-area {
+            margin-top: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 4px;
+            min-height: 80px;
+        }
+        .result-value, .time-value {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .loader {
+            display: none;
+            margin: 10px auto;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript vs. WebAssembly (C, Rust, AssemblyScript)</h1>
+    
+    <div class="experiment-container">
+        <!-- JavaScript Implementation -->
+        <div class="experiment-box js-box">
+            <h2>JavaScript</h2>
+            <div class="input-group">
+                <label for="js-points">Number of Points:</label>
+                <input type="number" id="js-points" value="100000000" min="1000" step="1000">
+            </div>
+            <button id="js-start">Calculate π</button>
+            <div class="loader" id="js-loader"></div>
+            <div class="result-area">
+                <div>Result: <span class="result-value" id="js-result">-</span></div>
+                <div>Time: <span class="time-value" id="js-time">-</span></div>
+            </div>
+        </div>
+        
+        <!-- C WebAssembly Implementation -->
+        <div class="experiment-box c-box">
+            <h2>C WebAssembly</h2>
+            <div class="input-group">
+                <label for="c-points">Number of Points:</label>
+                <input type="number" id="c-points" value="100000000" min="1000" step="1000">
+            </div>
+            <button id="c-start" disabled>Calculate π</button>
+            <div class="loader" id="c-loader"></div>
+            <div class="result-area">
+                <div>Result: <span class="result-value" id="c-result">-</span></div>
+                <div>Time: <span class="time-value" id="c-time">-</span></div>
+            </div>
+        </div>
+        
+        <!-- Rust WebAssembly Implementation -->
+        <div class="experiment-box rust-box">
+            <h2>Rust WebAssembly</h2>
+            <div class="input-group">
+                <label for="rust-points">Number of Points:</label>
+                <input type="number" id="rust-points" value="100000000" min="1000" step="1000">
+            </div>
+            <button id="rust-start" disabled>Calculate π</button>
+            <div class="loader" id="rust-loader"></div>
+            <div class="result-area">
+                <div>Result: <span class="result-value" id="rust-result">-</span></div>
+                <div>Time: <span class="time-value" id="rust-time">-</span></div>
+            </div>
+        </div>
+        
+	<!-- AssemblyScript Implementation -->
+	<div class="experiment-box as-box">
+            <h2>AssemblyScript</h2>
+            <div class="input-group">
+                <label for="as-points">Number of Points:</label>
+                <input type="number" id="as-points" value="100000000" min="1000" step="1000">
+            </div>
+            <button id="as-start" disabled>Calculate π</button>
+            <div class="loader" id="as-loader"></div>
+            <div class="result-area">
+                <div>Result: <span class="result-value" id="as-result">-</span></div>
+                <div>Time: <span class="time-value" id="as-time">-</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Implementation -->
+    <script>
+        // Monte Carlo PI approximation in JavaScript
+        function approximatePiJS(numPoints) {
+            let pointsInCircle = 0;
+            
+            for (let i = 0; i < numPoints; i++) {
+                // Generate random point in the square (-1,-1) to (1,1)
+                const x = 2.0 * Math.random() - 1.0;
+                const y = 2.0 * Math.random() - 1.0;
+                
+                // Check if the point is inside the circle of radius 1
+                if (x*x + y*y <= 1.0) {
+                    pointsInCircle++;
+                }
+            }
+            
+            // Calculate pi approximation
+            return 4.0 * pointsInCircle / numPoints;
+        }
+
+        // JavaScript run button
+        document.getElementById('js-start').addEventListener('click', async function() {
+            const numPoints = parseInt(document.getElementById('js-points').value);
+            const resultElement = document.getElementById('js-result');
+            const timeElement = document.getElementById('js-time');
+            const loader = document.getElementById('js-loader');
+            const button = this;
+            
+            // Reset and show loading
+            resultElement.textContent = '-';
+            timeElement.textContent = '-';
+            button.disabled = true;
+            loader.style.display = 'block';
+            
+            // Allow UI to update before starting computation
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Measure execution time
+            const startTime = performance.now();
+            
+            // Run calculation
+            const result = approximatePiJS(numPoints);;
+            
+            const endTime = performance.now();
+            const executionTime = ((endTime - startTime) / 1000).toFixed(4);
+            
+            // Display results
+            resultElement.textContent = result.toFixed(8);
+            timeElement.textContent = executionTime + ' seconds';
+            
+            // Hide loading
+            loader.style.display = 'none';
+            button.disabled = false;
+        });
+    </script>
+
+    <!-- C WebAssembly Loading & Implementation - Modern Streaming Approach -->
+    <script>
+        // Modern approach using streaming compilation for C WebAssembly
+        (async function loadCWasmModule() {
+            try {
+                // Use streaming instantiation for better performance
+		const imports = {
+ 			env: {
+				emscripten_date_now: () => Date.now()
+			}
+		};
+                const { instance } = await WebAssembly.instantiateStreaming(
+                    fetch('./dist/c-pi.wasm'), imports);
+                
+                // Store module instance globally
+                window.cWasmModule = instance;
+                
+                // Enable button once module is loaded
+                document.getElementById('c-start').disabled = false;
+                console.log('C WebAssembly module loaded successfully');
+            } catch (error) {
+                console.error('Failed to load C WebAssembly module:', error);
+                document.getElementById('c-result').textContent = 'Module loading error';
+            }
+        })();
+
+        // C WebAssembly run button
+        document.getElementById('c-start').addEventListener('click', async function() {
+            if (!window.cWasmModule) {
+                document.getElementById('c-result').textContent = 'Module not loaded';
+                return;
+            }
+            
+            const numPoints = parseInt(document.getElementById('c-points').value);
+            const resultElement = document.getElementById('c-result');
+            const timeElement = document.getElementById('c-time');
+            const loader = document.getElementById('c-loader');
+            const button = this;
+            
+            // Reset and show loading
+            resultElement.textContent = '-';
+            timeElement.textContent = '-';
+            button.disabled = true;
+            loader.style.display = 'block';
+            
+            // Allow UI to update before starting computation
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Measure execution time
+            const startTime = performance.now();
+            
+            // Run calculation
+            const result = window.cWasmModule.exports.approximate_pi(numPoints);
+            
+            const endTime = performance.now();
+            const executionTime = ((endTime - startTime) / 1000).toFixed(4);
+            
+            // Display results
+            resultElement.textContent = result.toFixed(8);
+            timeElement.textContent = executionTime + ' seconds';
+            
+            // Hide loading
+            loader.style.display = 'none';
+            button.disabled = false;
+        });
+    </script>
+
+    <!-- Rust WebAssembly Loading & Implementation - Modern Streaming Approach -->
+<script type="module">
+  import init, { approximate_pi } from './dist/rust-pi.js';
+
+  async function run() {
+    // Load the Wasm module and bind exports
+    await init();
+
+    // Enable the button after module is ready
+    document.getElementById('rust-start').disabled = false;
+    console.log('Rust WebAssembly module loaded successfully');
+
+    // Attach event listener once module is ready
+    document.getElementById('rust-start').addEventListener('click', async function () {
+      const numPoints = parseInt(document.getElementById('rust-points').value, 10);
+      const resultElement = document.getElementById('rust-result');
+      const timeElement = document.getElementById('rust-time');
+      const loader = document.getElementById('rust-loader');
+      const button = this;
+
+      // Reset and show loading
+      resultElement.textContent = '-';
+      timeElement.textContent = '-';
+      button.disabled = true;
+      loader.style.display = 'block';
+
+      // Allow UI to update
+      await new Promise(resolve => setTimeout(resolve, 50));
+
+      // Measure time and run computation
+      const startTime = performance.now();
+      const result = approximate_pi(numPoints);
+      const endTime = performance.now();
+      const executionTime = ((endTime - startTime) / 1000).toFixed(4);
+
+      // Display result
+      resultElement.textContent = result.toFixed(8);
+      timeElement.textContent = `${executionTime} seconds`;
+
+      // Reset UI
+      loader.style.display = 'none';
+      button.disabled = false;
+    });
+  }
+
+  run();
+</script>
+
+
+
+<script type="module">
+  let computePi;
+
+  async function run() {
+    try {
+      // Load the AssemblyScript WASM module
+      const { instance } = await WebAssembly.instantiateStreaming(
+        fetch('./dist/as-pi.wasm')
+      );
+
+      // Get the exported function
+      computePi = instance.exports.compute_pi;
+
+      // Enable the button once the module is ready
+      document.getElementById('as-start').disabled = false;
+      console.log('AssemblyScript WebAssembly module loaded successfully');
+
+      // Attach event listener
+      document.getElementById('as-start').addEventListener('click', async function () {
+        const numPoints = parseInt(document.getElementById('as-points').value, 10);
+        const resultElement = document.getElementById('as-result');
+        const timeElement = document.getElementById('as-time');
+        const loader = document.getElementById('as-loader');
+        const button = this;
+
+        // Reset and show loading
+        resultElement.textContent = '-';
+        timeElement.textContent = '-';
+        button.disabled = true;
+        loader.style.display = 'block';
+
+        // Let UI update
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        // Run computation and measure time
+        const startTime = performance.now();
+        const result = computePi(numPoints);
+        const endTime = performance.now();
+        const executionTime = ((endTime - startTime) / 1000).toFixed(4);
+
+        // Display result
+        resultElement.textContent = result.toFixed(8);
+        timeElement.textContent = `${executionTime} seconds`;
+
+        // Reset UI
+        loader.style.display = 'none';
+        button.disabled = false;
+      });
+    } catch (err) {
+      console.error('Failed to load AssemblyScript module:', err);
+      document.getElementById('as-result').textContent = 'Module loading error';
+    }
+  }
+
+  run();
+</script>
+
+</body>
+</html>
