@@ -1,5 +1,7 @@
 # WebAssembly Demo
 
+Note that these directions are general for your own use. The project structure used here is different.
+
 ## C
 
 First install emcc. The version in NPM is quite deprecated.
