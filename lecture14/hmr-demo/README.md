@@ -22,3 +22,11 @@ cd hmr-demo
 npm install
 npm run dev
 ```
+
+## Demo Notes For Instructor
+
+Execute the server with
+
+`npm run dev`
+
+Then modify somthing in `src/App.jsx`
