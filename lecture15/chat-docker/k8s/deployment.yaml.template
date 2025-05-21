@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-app
+spec:
+  replicas: 2   # pods 
+  selector:
+    matchLabels:
+      app: chat-app
+  template:
+    metadata:
+      labels:
+        app: chat-app
+    spec:
+      containers:
+      - name: chat-app
+        image: <REGION>-docker.pkg.dev/<PROJECT_ID>/<REPO_NAME>/chat:v1   #v1 is deterministic
+        ports:
+        - containerPort: <PORT>  # port that container listens on
+resources:  # optional, for HPA
+  requests:
+    cpu: "500m"
+  limits:
+    cpu: "1000m"  # 1 full core

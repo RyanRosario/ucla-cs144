@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-app
+spec:
+  replicas: 2   # pods 
+  selector:
+    matchLabels:
+      app: chat-app
+  template:
+    metadata:
+      labels:
+        app: chat-app
+    spec:
+      containers:
+      - name: chat-app
+        image: us-east1-docker.pkg.dev/cs144-25s-rosario/cs144/chat:v1
+        ports:
+        - containerPort: 1919
