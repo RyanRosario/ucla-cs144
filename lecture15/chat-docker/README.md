@@ -92,7 +92,7 @@ docker tag chat DOCKER_USERNAME/chat
 docker push DOCKER_USERNAME/chat
 ```
 
-## Enable Google Kubernetes Engine
+## Deploying to Google Kubernetes Engine
 
 1. Enable to GKE API. You only need to do this once.
 
