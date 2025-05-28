@@ -84,3 +84,6 @@ looks similar to a route. That is not a coincidence.
 `kubectl apply -f frontendconfig.yaml`
 
 7. Go to your domain. You should see your site without any security warnings.
+
+Note that you may need to change your ingress or frontend configuration if your app breaks. This is usually due to incompatibilities
+between Google Cloud's load balancer and your app's implementation.
