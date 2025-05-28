@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-appname
+spec:
+  replicas: 2   # pods
+  selector:
+    matchLabels:
+      app: your-appname
+  template:
+    metadata:
+      labels:
+        app: your-appname
+    spec:
+      containers:
+      - name: your-appanem
+        image: <ZONE>-docker.pkg.dev/<PROJECT_ID>/<CLUSTER_NAME>/<IMAGE_NAME>:<TAG>
+        ports:
+        - containerPort: <CONTAINER_PORT>
