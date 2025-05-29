@@ -1,7 +1,0 @@
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: chat-app-certificate
-spec:
-  domains:
-    - gke-demo.cs144.org
