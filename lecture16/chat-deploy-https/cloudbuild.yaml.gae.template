@@ -1,0 +1,11 @@
+steps:
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']   # npm install
+
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']  # If using a build step: npm run build
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '--quiet']  # gcloud app deploy
+
+timeout: '900s'
