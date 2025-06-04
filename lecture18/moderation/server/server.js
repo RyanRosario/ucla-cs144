@@ -42,7 +42,6 @@ app.post('/api/moderate', upload.single('image'), async (req, res) => {
       const moderationRes = await openai.moderations.create({ input: description });
       descriptionFlagged = moderationRes.results[0].flagged;
     }
-
     res.json({ isHuman, descriptionFlagged });
   } catch (err) {
     console.error(err);

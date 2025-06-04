@@ -2,41 +2,50 @@ import React, { useState } from 'react';
 import './style.css';
 
 export default function App() {
-  const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [description, setDescription] = useState('');
-  const [imageError, setImageError] = useState('');
-  const [descriptionError, setDescriptionError] = useState('');
+  const [imgStatus, setImgStatus] = useState('');
+  const [descStatus, setDescStatus] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      setImage(file);
-      setImageError('');
-    }
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (!file) return;
+    setImageFile(file);
+    setImageUrl(URL.createObjectURL(file));
+    setImgStatus('');
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
   };
 
   const handleSubmit = async () => {
-    setImageError('');
-    setDescriptionError('');
+    if (!imageFile || !description) return;
+
     setLoading(true);
+    setImgStatus('');
+    setDescStatus('');
 
     const formData = new FormData();
-    if (image) formData.append('image', image);
+    formData.append('image', imageFile);
     formData.append('description', description);
 
     try {
-      const res = await fetch('/api/moderate', {
+      const response = await fetch('/api/moderate', {
         method: 'POST',
         body: formData
       });
-      const result = await res.json();
 
-      if (!result.isHuman) setImageError('Image must be of a human.');
-      if (result.descriptionFlagged) setDescriptionError('Description violates content policies.');
+      const result = await response.json();
+
+      setImgStatus(result.isHuman ? 'Profile pic looks OK!' : 'Profile pic must be of a human!');
+      setDescStatus(result.descriptionFlagged ? 'Description violates content policies' : 'Description looks good!');
     } catch (err) {
-      console.error(err);
+      setImgStatus('Error processing image.');
+      setDescStatus('Error processing description.');
     } finally {
       setLoading(false);
     }
@@ -44,26 +53,21 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1>Upload Your Profile Picture and Description</h1>
-
+      <h1>Upload Your Profile Picture!</h1>
       <div
         className="dropzone"
         onDrop={handleDrop}
-        onDragOver={(e) => e.preventDefault()}
-        style={{ background: loading ? '#ffcccc' : 'white' }}
+        onDragOver={handleDragOver}
       >
-        {image ? image.name : 'Drag and drop an image here'}
+        {imageUrl ? <img src={imageUrl} alt="Preview" className="preview" /> : 'Drag and drop an image here'}
       </div>
-      {imageError && <p className="error-text">{imageError}</p>}
-
+      {imgStatus && <p className={imgStatus.includes('OK') ? 'status-ok' : 'status-fail'}>{imgStatus}</p>}
       <textarea
-        className="description-input"
         placeholder="Enter a description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      {descriptionError && <p className="error-text">{descriptionError}</p>}
-
+      {descStatus && <p className={descStatus.includes('good') ? 'status-ok' : 'status-fail'}>{descStatus}</p>}
       <button onClick={handleSubmit} disabled={loading}>Submit</button>
       {loading && <div className="spinner"></div>}
     </div>

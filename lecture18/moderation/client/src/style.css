@@ -13,45 +13,54 @@ body, html {
   justify-content: center;
   height: 100vh;
   text-align: center;
-  padding: 20px;
 }
 
 .dropzone {
   width: 300px;
-  height: 150px;
-  border: 2px dashed #aaa;
+  height: 200px;
+  border: 2px dashed #ccc;
   background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  transition: background 0.3s;
+  margin: 10px 0;
 }
 
-.description-input {
+.preview {
+  max-height: 180px;
+  max-width: 280px;
+  object-fit: contain;
+}
+
+textarea {
   width: 300px;
   height: 80px;
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 14px;
+  margin: 10px 0;
+  padding: 5px;
 }
 
-.error-text {
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.status-ok {
+  color: green;
+}
+
+.status-fail {
   color: red;
-  font-size: 14px;
-  margin: 4px;
 }
 
 .spinner {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #555;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  animation: spin 1s linear infinite;
   margin-top: 10px;
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #555;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
