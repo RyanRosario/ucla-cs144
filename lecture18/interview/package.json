@@ -1,0 +1,21 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k \"npm --prefix client run dev\" \"npm --prefix server run start\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@vitejs/plugin-react": "^4.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "framer-motion": "^12.16.0",
+    "openai": "^5.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
