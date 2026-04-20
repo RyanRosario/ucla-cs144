@@ -15,7 +15,7 @@ Install dependencies and start the app:
 ```bash
 npm install
 # -- separates pm2 args from npm args, so "start" is passed to npm
-pm2 start npm -- start
+pm2 start npm --name name_the_app -- start
 ```
 
 Useful pm2 commands:
