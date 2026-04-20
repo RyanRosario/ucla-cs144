@@ -441,7 +441,7 @@ function toggleSettings() {
 }
 
 async function loadOfficeHours() {
-  const hours = await apiGet("/api/office-hours");
+  const hours = await apiGet("api/office-hours");
   const list = document.getElementById("ohList");
   if (hours.length === 0) {
     list.innerHTML = '<p style="color:#94a3b8;font-size:0.875rem;">No office hours configured. Add some below.</p>';
@@ -465,13 +465,13 @@ async function addOfficeHour() {
     end_time: document.getElementById("ohEnd").value,
     slot_duration: Number(document.getElementById("ohDuration").value),
   };
-  await apiPost("/api/office-hours", body);
+  await apiPost("api/office-hours", body);
   loadOfficeHours();
   loadWeek();
 }
 
 async function deleteOfficeHour(id) {
-  await apiDelete(`/api/office-hours/${id}`);
+  await apiDelete(`api/office-hours/${id}`);
   loadOfficeHours();
   loadWeek();
 }
@@ -481,7 +481,7 @@ async function deleteOfficeHour(id) {
 async function loadWeek() {
   updateWeekLabel();
   const monday = fmtDate(currentMonday);
-  const slots = await apiGet(`/api/slots?week=${monday}`);
+  const slots = await apiGet(`api/slots?week=${monday}`);
   renderCalendar(slots);
 }
 
@@ -612,7 +612,7 @@ async function submitBooking() {
   const name = document.getElementById("bookName").value.trim();
   if (!name) { alert("Student name is required."); return; }
 
-  const result = await apiPost("/api/bookings", {
+  const result = await apiPost("api/bookings", {
     date: currentSlotData.date,
     start_time: currentSlotData.start_time,
     end_time: currentSlotData.end_time,
@@ -628,7 +628,7 @@ async function submitBooking() {
 
 async function cancelBooking(id) {
   if (!confirm("Cancel this booking?")) return;
-  await apiDelete(`/api/bookings/${id}`);
+  await apiDelete(`api/bookings/${id}`);
   closeModal();
   loadWeek();
 }
