@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eastern Sierra Dashboard – CS144</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Eastern Sierra Dashboard</h1>
+  <p class="subtitle">Mammoth Mountain &bull; Crowley Lake &bull; CS144 Demo</p>
+</header>
+
+<div class="fishmas-banner">
+  <span class="fishmas-icon">&#127907;</span>
+  <div>
+    <strong>Fishmas is April 25! See you there!</strong><br>
+    Crowley Larkspur Rocking-R &mdash; Mammoth Lakes (Crowley Lake), CA
+  </div>
+  <span class="fishmas-icon">&#127907;</span>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="mountain" role="tab" aria-selected="true">Mountain Conditions</button>
+  <button class="tab" data-tab="crowley" role="tab">Crowley Lake Weather</button>
+  <button class="tab" data-tab="forecasts" role="tab">Forecasts</button>
+  <button class="tab" data-tab="ratings" role="tab">Rate the Snow</button>
+  <button class="tab" data-tab="demos" role="tab">API Demos</button>
+</nav>
+
+<main>
+
+  <!-- ====== MOUNTAIN CONDITIONS ====== -->
+  <section id="mountain" class="tab-content active">
+    <h2>Mammoth Mountain Conditions</h2>
+
+    <div class="card-row" id="temp-cards">
+      <div class="card temp-card">
+        <h3>Base Lodge</h3>
+        <div class="big-num" id="temp-base">--</div>
+        <div class="label">&deg;F</div>
+        <div class="sub" id="cond-base"></div>
+      </div>
+      <div class="card temp-card">
+        <h3>Mid-Mountain</h3>
+        <div class="big-num" id="temp-mid">--</div>
+        <div class="label">&deg;F</div>
+        <div class="sub" id="cond-mid"></div>
+      </div>
+      <div class="card temp-card">
+        <h3>Summit</h3>
+        <div class="big-num" id="temp-summit">--</div>
+        <div class="label">&deg;F</div>
+        <div class="sub" id="cond-summit"></div>
+      </div>
+    </div>
+
+    <div class="card-row" id="open-cards">
+      <div class="card stat-card">
+        <div class="stat-num" id="lifts-open">--</div>
+        <div class="stat-label">Lifts Open</div>
+        <div class="stat-total" id="lifts-total"></div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-num" id="trails-open">--</div>
+        <div class="stat-label">Trails Open</div>
+        <div class="stat-total" id="trails-total"></div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-num" id="parks-open">--</div>
+        <div class="stat-label">Features / Parks</div>
+        <div class="stat-total" id="parks-total"></div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card snow-card">
+        <h3>Snow Report</h3>
+        <div id="snow-report">Loading&hellip;</div>
+      </div>
+    </div>
+
+    <div class="card webcam-card">
+      <h3>Summit Webcam &mdash; Top of the Sierra</h3>
+      <img id="webcam-img" src="/api/mammoth/webcam" alt="Mammoth Mountain Summit Webcam">
+      <button id="refresh-cam" class="btn btn-sm">Refresh</button>
+    </div>
+  </section>
+
+  <!-- ====== CROWLEY LAKE WEATHER ====== -->
+  <section id="crowley" class="tab-content">
+    <h2>Crowley Lake Fishcamp Weather Station</h2>
+    <p class="station-info">Station: <strong>KCAMAMMO76</strong> &mdash; Crowley Larkspur Rocking-R, Mammoth Lakes (Crowley Lake), CA</p>
+
+    <div class="card-row" id="crowley-cards">
+      <div class="card temp-card">
+        <h3>Temperature</h3>
+        <div class="big-num" id="cw-temp">--</div>
+        <div class="label">&deg;F</div>
+      </div>
+      <div class="card temp-card">
+        <h3>Wind</h3>
+        <div class="big-num" id="cw-wind">--</div>
+        <div class="label">mph</div>
+        <div class="sub" id="cw-wind-dir"></div>
+      </div>
+      <div class="card temp-card">
+        <h3>Humidity</h3>
+        <div class="big-num" id="cw-humidity">--</div>
+        <div class="label">%</div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card detail-card">
+        <h3>Details</h3>
+        <table id="crowley-details">
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="last-updated" id="cw-updated"></p>
+  </section>
+
+  <!-- ====== FORECASTS ====== -->
+  <section id="forecasts" class="tab-content">
+    <h2>Weather Forecasts</h2>
+    <div class="forecast-grid">
+      <div class="forecast-col">
+        <h3>Mammoth Mountain</h3>
+        <div id="fc-mammoth-mountain" class="forecast-list">Loading&hellip;</div>
+      </div>
+      <div class="forecast-col">
+        <h3>Mammoth Lakes</h3>
+        <div id="fc-mammoth-lakes" class="forecast-list">Loading&hellip;</div>
+      </div>
+      <div class="forecast-col">
+        <h3>Crowley Lake</h3>
+        <div id="fc-crowley-lake" class="forecast-list">Loading&hellip;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== RATE THE SNOW ====== -->
+  <section id="ratings" class="tab-content">
+    <h2>Rate Current Snow Conditions</h2>
+    <p class="note">Rate limit: 5 submissions per 10 seconds. Exceed it and you'll get a 429.</p>
+
+    <form id="rating-form" class="card rating-form-card">
+      <div class="star-select">
+        <span class="star" data-val="1">&#9733;</span>
+        <span class="star" data-val="2">&#9733;</span>
+        <span class="star" data-val="3">&#9733;</span>
+        <span class="star" data-val="4">&#9733;</span>
+        <span class="star" data-val="5">&#9733;</span>
+        <input type="hidden" name="rating" id="rating-val" value="">
+      </div>
+      <textarea name="comment" id="rating-comment" rows="3" placeholder="How's the snow today?"></textarea>
+      <button type="submit" class="btn">Submit Rating</button>
+      <div id="rating-msg" class="msg" aria-live="polite"></div>
+    </form>
+
+    <h3>Recent Ratings</h3>
+    <div id="ratings-list" class="ratings-list">No ratings yet.</div>
+  </section>
+
+  <!-- ====== API DEMOS ====== -->
+  <section id="demos" class="tab-content">
+    <h2>API Demos</h2>
+
+    <!-- CORS -->
+    <div class="card demo-card">
+      <h3>CORS Failure Demo</h3>
+      <p>Attempt to fetch mountain conditions directly from the browser vs. through our server proxy.</p>
+      <div class="btn-row">
+        <button id="cors-direct" class="btn btn-danger">Fetch Directly (CORS Error)</button>
+        <button id="cors-proxy" class="btn">Fetch via Server Proxy</button>
+      </div>
+      <pre id="cors-result" class="result-box"></pre>
+    </div>
+
+    <!-- Bearer Token -->
+    <div class="card demo-card">
+      <h3>Bearer Token Authentication</h3>
+      <p>The <code>/api/secret-report</code> endpoint requires a Bearer token in the <code>Authorization</code> header.</p>
+      <div class="input-row">
+        <input type="text" id="bearer-input" placeholder="Enter bearer token" class="input">
+        <button id="bearer-fetch" class="btn">Fetch Secret Report</button>
+      </div>
+      <button id="bearer-no-auth" class="btn btn-sm btn-outline">Try Without Token</button>
+      <pre id="bearer-result" class="result-box"></pre>
+    </div>
+
+    <!-- API Key -->
+    <div class="card demo-card">
+      <h3>API Key Authentication</h3>
+      <p>The <code>/api/snow-quality</code> endpoint requires an API key as a query parameter: <code>?apiKey=...</code></p>
+      <div class="input-row">
+        <input type="text" id="apikey-input" placeholder="Enter API key" class="input">
+        <button id="apikey-fetch" class="btn">Fetch Snow Quality</button>
+      </div>
+      <button id="apikey-no-key" class="btn btn-sm btn-outline">Try Without Key</button>
+      <pre id="apikey-result" class="result-box"></pre>
+    </div>
+
+    <!-- Class Demo (missing endpoint) -->
+    <div class="card demo-card">
+      <h3>Class Live Demo Endpoint</h3>
+      <p>This fetches from <code>/api/class-demo</code> &mdash; an endpoint that doesn't exist yet. We'll create it live in class!</p>
+      <button id="class-demo-btn" class="btn">Fetch /api/class-demo</button>
+      <pre id="class-demo-result" class="result-box"></pre>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  CS144 &mdash; Web Technologies &mdash; UCLA &mdash; Lecture 8 Demo
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
