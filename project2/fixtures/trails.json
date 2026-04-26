@@ -1,0 +1,1459 @@
+{
+  "type": "TrailBatch",
+  "timestamp": "2025-05-06T13:52:59",
+  "trails": [
+    {
+      "name": "Agee's Run",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Andy's Double Gold",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Apple Pie",
+      "status": "OPEN",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Arriba (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Arriba (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Blue Ox",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Breakover",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Bristlecone",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Broadway",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Center Bowl",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "China Bowl",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Christmas Bowl",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Climax",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Comeback Trail",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Comin' Thru",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Cornice Bowl",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Coyote",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Critters",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Disco Playground",
+      "status": "OPEN",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Drop 18",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Dropout Chutes",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Dry Creek",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Dry Creek (Lower)",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Dry Creek (Upper)",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Easy Rider",
+      "status": "OPEN",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Europa Cup",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Exhibition",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Forest Trail",
+      "status": "OPEN",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Glades",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Glades"
+      ]
+    },
+    {
+      "name": "Gravy Chute",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Gremlins Gulch",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Hangman's Hollow",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Hollywood Bowl",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Huevos Grande",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Jill's Pipe",
+      "status": "OPEN",
+      "difficulty": "Halfpipe",
+      "symbol": "Halfpipe",
+      "features": []
+    },
+    {
+      "name": "Jill's Run",
+      "status": "OPEN",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Jill's Run Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill"
+      ]
+    },
+    {
+      "name": "Kiwi Flats",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Knee Deep",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Lodgepole",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Lost in the Woods",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Lost in the Woods (Lower) Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill",
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Lost in the Woods (Upper) Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill",
+        "Grooming"
+      ]
+    },
+    {
+      "name": "MJB's",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Main Park",
+      "status": "OPEN",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Main Pipe",
+      "status": "CLOSED",
+      "difficulty": "Halfpipe",
+      "symbol": "Halfpipe",
+      "features": []
+    },
+    {
+      "name": "Mambo (Lower)",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Mambo (Upper)",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Monument",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "New Critters",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Old Comeback",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Oops",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Outpost Glades",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Glades"
+      ]
+    },
+    {
+      "name": "Over Easy",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Paranoid Chutes",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Paranoid Flats",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Patrolmen's",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Phantom's Escape",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Philippe's",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Ponderosa",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Ralphie's",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Reds Lake Run",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Ricardo's",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Rigley's Bowl",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Road Runner (Middle)",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Road Runner (Upper)",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Road Runner Lower (Bottom Half)",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Road Runner Lower (Top Half)",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Rodger's Ridge",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Rooster Tail",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Rusty's",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Saddle Bowl",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Santiago",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Santiago Bowl",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Scotty's",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Secret Spot",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Sesame Street",
+      "status": "OPEN",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Silver Tip",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Skyline",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "St. Anton",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "St. Moritz",
+      "status": "OPEN",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Starr Chute",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Stump Alley",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Surprise",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Terry's Run",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "The Bear",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "The Hemlocks",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "The Hemlocks (Terrain Features)",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Tony's / Fascination",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Top of the World",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Training Wheels",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Twilight Zone",
+      "status": "OPEN",
+      "difficulty": "Adventure Zone",
+      "symbol": "Adventure Zone",
+      "features": []
+    },
+    {
+      "name": "Wall",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Wall Street",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Walter's",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "West Bowl",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "West Summit Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill"
+      ]
+    },
+    {
+      "name": "Whitebark Bowl (Lower)",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Whitebark Bowl (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Whitebark Ridge",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Wipeout Chutes",
+      "status": "OPEN",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Woolly's Woods",
+      "status": "OPEN",
+      "difficulty": "Adventure Zone",
+      "symbol": "Adventure Zone",
+      "features": []
+    },
+    {
+      "name": "World Cup",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Antin Alley / Chickadee",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Avalanche",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Avalanche Chutes",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Back for More (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Big Bird",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Big Bird Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill"
+      ]
+    },
+    {
+      "name": "Bluejay",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Canyon Lodge Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill"
+      ]
+    },
+    {
+      "name": "Cloverleaf",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Crosswalk",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Downhill (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Downhill (Upper)",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Encore",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Face of Five (Lower)",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Face of Five (Upper)",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Follow Me",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Ginger Bread",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Grizzly (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Grizzly Lower",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Hansel",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Haven't the Foggiest",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Huck's Drop",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Adventure Zone",
+      "symbol": "Adventure Zone",
+      "features": []
+    },
+    {
+      "name": "Hully Gully",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Jibs & More",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Little Bird",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Milk Run",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Quicksilver",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Redtail",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Redwing",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Relief",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Repeat 22",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Roller Coaster (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Roller Coaster (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Round About",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Round Robin",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Sanctuary",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "School Yard",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Shaft",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Side Show",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Skiback Trail Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill"
+      ]
+    },
+    {
+      "name": "Sliver",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Snake Run",
+      "status": "CLOSED",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Solitude (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "Solitude (Upper)",
+      "status": "OPEN",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": [
+        "Grooming"
+      ]
+    },
+    {
+      "name": "South Park",
+      "status": "CLOSED",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Spring Canyon",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Sunset",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Sunshine Glades",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Glades"
+      ]
+    },
+    {
+      "name": "Swell",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "The Acts",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Transition Park",
+      "status": "CLOSED",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Triangle",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Village Ski Back Trail",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Viva (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Viva (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Way Home",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Wonderland Playground",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Baby Dave's Glades",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Glades"
+      ]
+    },
+    {
+      "name": "Back for More (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Bridges",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Christmas Tree",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Dave's Run",
+      "status": "OPEN",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Dragon Alley",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Dragon's Back",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Dragon's Pass",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Dragon's Tail",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Eagle Lodge Uphill Route",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Uphill",
+      "symbol": "Uphill",
+      "features": [
+        "Uphill"
+      ]
+    },
+    {
+      "name": "Eagle Playground",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Freestyle Terrain",
+      "symbol": "Park",
+      "features": []
+    },
+    {
+      "name": "Goldhill (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Goldhill (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Goldie's Flight",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Adventure Zone",
+      "symbol": "Adventure Zone",
+      "features": []
+    },
+    {
+      "name": "Head Chutes",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Holiday",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Juniper",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Lupin",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Main Traverse",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Manzanita",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Pumpkin",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Ricochet (Lower)",
+      "status": "CLOSED",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Ricochet (Upper)",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": []
+    },
+    {
+      "name": "Roma's Glades",
+      "status": "CLOSED",
+      "difficulty": "Very Difficult",
+      "symbol": "Single Black Diamond",
+      "features": [
+        "Glades"
+      ]
+    },
+    {
+      "name": "Roma's Road",
+      "status": "OPEN",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Sleepy Hollow",
+      "status": "CLOSED",
+      "difficulty": "Beginner",
+      "symbol": "Green Circle",
+      "features": []
+    },
+    {
+      "name": "Slot",
+      "status": "CLOSED FOR SEASON",
+      "difficulty": "Advanced",
+      "symbol": "Blue/Black Mixed",
+      "features": []
+    },
+    {
+      "name": "Watertank",
+      "status": "CLOSED",
+      "difficulty": "Slightly Difficult",
+      "symbol": "Blue Square",
+      "features": []
+    },
+    {
+      "name": "Wazoo",
+      "status": "CLOSED",
+      "difficulty": "Extremely Difficult",
+      "symbol": "Double Black Diamond",
+      "features": []
+    }
+  ]
+}
