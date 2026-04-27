@@ -271,11 +271,11 @@ function setupCorsDemo() {
 
   document.getElementById('cors-direct').addEventListener('click', async () => {
     resultBox.className = 'result-box';
-    resultBox.textContent = 'Fetching directly from https://www.mtnpowder.com/feed?resortId=60 ...';
+    resultBox.textContent = 'Fetching directly from https://www.mammothmountain.com/ ...';
     try {
-      const res = await fetch('https://www.mtnpowder.com/feed?resortId=60');
-      const data = await res.json();
-      resultBox.textContent = 'Unexpected success (check console):\n' + JSON.stringify(data).slice(0, 300);
+      const res = await fetch('https://www.mammothmountain.com/');
+      const data = await res.text();
+      resultBox.textContent = 'Unexpected success (check console):\n' + data.slice(0, 300);
       resultBox.className = 'result-box success-text';
     } catch (err) {
       resultBox.textContent =

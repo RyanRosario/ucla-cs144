@@ -50,14 +50,14 @@ Nginx).
 This is the most visual demo. Open DevTools → Console **before** clicking.
 
 1. Click **"Fetch Directly (CORS Error)"**.
-   - The browser tries `fetch('https://www.mtnpowder.com/feed?resortId=60')`
+   - The browser tries `fetch('https://www.mammothmountain.com/')`
      directly from the frontend.
    - The request is blocked — the external server does not send an
      `Access-Control-Allow-Origin` header.
    - The red error box shows the `TypeError: Failed to fetch` message.
    - In the Console you'll see the full CORS error:
      ```
-     Access to fetch at 'https://www.mtnpowder.com/...' from origin
+     Access to fetch at 'https://www.mammothmountain.com/' from origin
      'http://localhost:3000' has been blocked by CORS policy: No
      'Access-Control-Allow-Origin' header is present on the requested resource.
      ```
