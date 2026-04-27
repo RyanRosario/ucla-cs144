@@ -1,0 +1,23 @@
+{
+  "name": "trpc-todo-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "server": "tsx server/index.ts",
+    "client": "tsx client/index.ts",
+    "demo": "tsx server/index.ts & SERVER_PID=$! && sleep 2 && tsx client/index.ts; kill $SERVER_PID 2>/dev/null"
+  },
+  "dependencies": {
+    "@trpc/server": "^11.16.0",
+    "@trpc/client": "^11.16.0",
+    "express": "^4.21.0",
+    "zod": "^3.25.0",
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
