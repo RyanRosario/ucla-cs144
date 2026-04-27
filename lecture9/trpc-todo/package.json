@@ -6,7 +6,8 @@
   "scripts": {
     "server": "tsx server/index.ts",
     "client": "tsx client/index.ts",
-    "demo": "tsx server/index.ts & SERVER_PID=$! && sleep 2 && tsx client/index.ts; kill $SERVER_PID 2>/dev/null"
+    "demo": "tsx server/index.ts & SERVER_PID=$! && sleep 2 && tsx client/index.ts; kill $SERVER_PID 2>/dev/null",
+    "type-errors": "tsc --noEmit"
   },
   "dependencies": {
     "@trpc/server": "^11.16.0",
