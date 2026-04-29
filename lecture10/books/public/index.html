@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 144 Book Explorer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    header {
+      background: #2563eb; color: white; padding: 1.5rem 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    header h1 { font-size: 1.25rem; white-space: nowrap; }
+
+    .search-wrapper {
+      position: relative; flex: 1; max-width: 600px;
+    }
+    #search {
+      width: 100%; padding: 0.6rem 1rem; border: none; border-radius: 6px;
+      font-size: 1rem; outline: none;
+    }
+    #search::placeholder { color: #999; }
+
+    .dropdown {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: white; border-radius: 0 0 6px 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10;
+      max-height: 300px; overflow-y: auto; display: none;
+    }
+    .dropdown.open { display: block; }
+    .dropdown-item {
+      padding: 0.6rem 1rem; cursor: pointer; border-bottom: 1px solid #eee;
+    }
+    .dropdown-item:hover, .dropdown-item.active { background: #eff6ff; }
+
+    main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+    .card {
+      background: white; border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem;
+    }
+    .card h2 { margin-bottom: 1rem; color: #2563eb; }
+
+    .book-detail h3 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .book-detail .authors { color: #666; margin-bottom: 1rem; }
+    .book-detail .badge {
+      display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600; margin-right: 0.5rem; margin-bottom: 1rem;
+    }
+    .badge-category { background: #dbeafe; color: #1d4ed8; }
+    .badge-price { background: #dcfce7; color: #166534; }
+
+    .fields-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .field-item { background: #f9fafb; padding: 0.6rem 0.8rem; border-radius: 6px; }
+    .field-item .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+    .field-item .value { font-weight: 500; margin-top: 0.15rem; }
+
+    .placeholder { color: #999; text-align: center; padding: 3rem; }
+
+    /* Form */
+    form { display: grid; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.25rem; }
+    input, select {
+      width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db;
+      border-radius: 6px; font-size: 0.95rem; font-family: inherit;
+    }
+    input:focus, select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 2px #bfdbfe; }
+
+    .category-fields { display: none; }
+    .category-fields.visible { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    button[type="submit"] {
+      padding: 0.6rem 1.5rem; background: #2563eb; color: white; border: none;
+      border-radius: 6px; font-size: 1rem; cursor: pointer; justify-self: start;
+    }
+    button[type="submit"]:hover { background: #1d4ed8; }
+
+    .msg { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; display: none; }
+    .msg.success { display: block; background: #dcfce7; color: #166534; }
+    .msg.error { display: block; background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>CS 144 Book Explorer</h1>
+  <div class="search-wrapper">
+    <input type="text" id="search" placeholder="Search books by title..." autocomplete="off">
+    <div class="dropdown" id="dropdown"></div>
+  </div>
+</header>
+
+<main>
+  <div id="book-detail" class="card" style="display:none"></div>
+
+  <div class="card">
+    <h2>Add a Book</h2>
+    <div id="form-msg" class="msg"></div>
+    <form id="add-form">
+      <div class="form-row">
+        <div><label for="f-title">Title *</label><input id="f-title" required></div>
+        <div><label for="f-author">Author(s) * <span style="font-weight:normal;color:#999">(comma-separated)</span></label><input id="f-author" required></div>
+      </div>
+      <div class="form-row">
+        <div><label for="f-price">Price *</label><input id="f-price" type="number" step="0.01" min="0" required></div>
+        <div>
+          <label for="f-category">Category *</label>
+          <select id="f-category" required>
+            <option value="">Select...</option>
+            <option value="programming">Programming</option>
+            <option value="fiction">Fiction</option>
+            <option value="history">History</option>
+            <option value="science">Science</option>
+            <option value="biography">Biography</option>
+            <option value="self-help">Self-Help</option>
+            <option value="cooking">Cooking</option>
+            <option value="travel">Travel</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div><label for="f-pages">Pages</label><input id="f-pages" type="number" min="1"></div>
+        <div><label for="f-year">Year</label><input id="f-year" type="number" min="1900" max="2099"></div>
+      </div>
+      <div class="form-row">
+        <div><label for="f-publisher">Publisher</label><input id="f-publisher"></div>
+        <div></div>
+      </div>
+
+      <!-- Programming fields -->
+      <div id="fields-programming" class="category-fields">
+        <div><label for="f-language">Language *</label>
+          <select id="f-language">
+            <option value="">Select...</option>
+            <option>Python</option><option>JavaScript</option><option>Rust</option>
+            <option>Go</option><option>Java</option><option>C++</option>
+            <option>TypeScript</option><option>Ruby</option><option>Swift</option>
+            <option>Kotlin</option><option>C#</option><option>PHP</option>
+          </select>
+        </div>
+        <div><label for="f-edition">Edition</label><input id="f-edition" type="number" min="1"></div>
+        <div><label for="f-in_stock">In Stock</label><select id="f-in_stock"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <!-- Fiction fields -->
+      <div id="fields-fiction" class="category-fields">
+        <div><label for="f-genre">Genre</label><input id="f-genre"></div>
+        <div><label for="f-setting">Setting</label><input id="f-setting"></div>
+        <div><label for="f-award_winner">Award Winner</label><select id="f-award_winner"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <!-- History fields -->
+      <div id="fields-history" class="category-fields">
+        <div><label for="f-period">Period</label><input id="f-period"></div>
+        <div><label for="f-region">Region</label><input id="f-region"></div>
+        <div><label for="f-primary_sources">Primary Sources</label><select id="f-primary_sources"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <!-- Science fields -->
+      <div id="fields-science" class="category-fields">
+        <div><label for="f-field">Field</label><input id="f-field"></div>
+        <div><label for="f-peer_reviewed">Peer Reviewed</label><select id="f-peer_reviewed"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+        <div><label for="f-for_general_audience">For General Audience</label><select id="f-for_general_audience"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <!-- Biography fields -->
+      <div id="fields-biography" class="category-fields">
+        <div><label for="f-subject">Subject</label><input id="f-subject"></div>
+        <div><label for="f-subject_profession">Subject Profession</label><input id="f-subject_profession"></div>
+        <div><label for="f-era">Era</label><input id="f-era"></div>
+      </div>
+
+      <!-- Self-help fields -->
+      <div id="fields-self-help" class="category-fields">
+        <div><label for="f-topic">Topic</label><input id="f-topic"></div>
+        <div><label for="f-bestseller">Bestseller</label><select id="f-bestseller"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <!-- Cooking fields -->
+      <div id="fields-cooking" class="category-fields">
+        <div><label for="f-cuisine">Cuisine</label><input id="f-cuisine"></div>
+        <div><label for="f-difficulty">Difficulty</label><select id="f-difficulty"><option value="">—</option><option>easy</option><option>medium</option><option>hard</option></select></div>
+        <div><label for="f-num_recipes">Number of Recipes</label><input id="f-num_recipes" type="number" min="1"></div>
+        <div><label for="f-vegetarian_friendly">Vegetarian Friendly</label><select id="f-vegetarian_friendly"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <!-- Travel fields -->
+      <div id="fields-travel" class="category-fields">
+        <div><label for="f-destination">Destination</label><input id="f-destination"></div>
+        <div><label for="f-trip_type">Trip Type</label><input id="f-trip_type"></div>
+        <div><label for="f-includes_maps">Includes Maps</label><select id="f-includes_maps"><option value="">—</option><option value="true">Yes</option><option value="false">No</option></select></div>
+      </div>
+
+      <button type="submit">Add Book</button>
+    </form>
+  </div>
+</main>
+
+<script>
+const searchInput = document.getElementById("search");
+const dropdown = document.getElementById("dropdown");
+const detailDiv = document.getElementById("book-detail");
+const form = document.getElementById("add-form");
+const formMsg = document.getElementById("form-msg");
+const categorySelect = document.getElementById("f-category");
+let activeIdx = -1;
+let debounceTimer;
+
+// ── Autocomplete ──
+
+searchInput.addEventListener("input", () => {
+  clearTimeout(debounceTimer);
+  const q = searchInput.value.trim();
+  if (q.length < 2) { closeDropdown(); return; }
+  debounceTimer = setTimeout(() => fetchSuggestions(q), 200);
+});
+
+searchInput.addEventListener("keydown", (e) => {
+  const items = dropdown.querySelectorAll(".dropdown-item");
+  if (!items.length) return;
+  if (e.key === "ArrowDown") { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, items.length - 1); highlight(items); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); highlight(items); }
+  else if (e.key === "Enter" && activeIdx >= 0) { e.preventDefault(); items[activeIdx].click(); }
+  else if (e.key === "Escape") { closeDropdown(); }
+});
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-wrapper")) closeDropdown();
+});
+
+async function fetchSuggestions(q) {
+  const res = await fetch(`/api/books/search?q=${encodeURIComponent(q)}`);
+  const books = await res.json();
+  activeIdx = -1;
+  if (!books.length) { closeDropdown(); return; }
+  dropdown.innerHTML = books
+    .map((b) => `<div class="dropdown-item" data-id="${b._id}">${esc(b.title)}</div>`)
+    .join("");
+  dropdown.classList.add("open");
+  dropdown.querySelectorAll(".dropdown-item").forEach((el) => {
+    el.addEventListener("click", () => selectBook(el.dataset.id, el.textContent));
+  });
+}
+
+function highlight(items) {
+  items.forEach((el, i) => el.classList.toggle("active", i === activeIdx));
+}
+
+function closeDropdown() { dropdown.classList.remove("open"); dropdown.innerHTML = ""; activeIdx = -1; }
+
+async function selectBook(id, title) {
+  searchInput.value = title;
+  closeDropdown();
+  const res = await fetch(`/api/books/${id}`);
+  const book = await res.json();
+  renderBook(book);
+}
+
+// ── Book Detail ──
+
+const SKIP = new Set(["_id", "__v", "title", "author", "price", "category"]);
+
+function renderBook(book) {
+  const authors = Array.isArray(book.author) ? book.author.join(", ") : book.author;
+  const fields = Object.entries(book)
+    .filter(([k]) => !SKIP.has(k))
+    .map(([k, v]) => {
+      const label = k.replace(/_/g, " ");
+      const display = typeof v === "boolean" ? (v ? "Yes" : "No") : v;
+      return `<div class="field-item"><div class="label">${esc(label)}</div><div class="value">${esc(String(display))}</div></div>`;
+    })
+    .join("");
+
+  detailDiv.innerHTML = `
+    <div class="book-detail">
+      <h3>${esc(book.title)}</h3>
+      <div class="authors">${esc(authors)}</div>
+      <span class="badge badge-category">${esc(book.category)}</span>
+      <span class="badge badge-price">$${Number(book.price).toFixed(2)}</span>
+      <div class="fields-grid">${fields}</div>
+    </div>`;
+  detailDiv.style.display = "block";
+}
+
+// ── Category-specific form fields ──
+
+const CATEGORIES = ["programming","fiction","history","science","biography","self-help","cooking","travel"];
+
+categorySelect.addEventListener("change", () => {
+  CATEGORIES.forEach((c) => {
+    const el = document.getElementById(`fields-${c}`);
+    if (el) el.classList.toggle("visible", c === categorySelect.value);
+  });
+  document.getElementById("f-language").required = categorySelect.value === "programming";
+});
+
+// ── Form submission ──
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  formMsg.className = "msg";
+
+  const cat = categorySelect.value;
+  if (cat === "programming" && !document.getElementById("f-language").value) {
+    formMsg.textContent = "Language is required for programming books.";
+    formMsg.className = "msg error";
+    return;
+  }
+
+  const authors = document.getElementById("f-author").value.split(",").map((s) => s.trim()).filter(Boolean);
+  const body = {
+    title: document.getElementById("f-title").value.trim(),
+    author: authors.length === 1 ? authors[0] : authors,
+    price: parseFloat(document.getElementById("f-price").value),
+    category: cat,
+  };
+
+  const optional = (id, key, type) => {
+    const val = document.getElementById(id)?.value;
+    if (!val) return;
+    if (type === "number") body[key] = parseInt(val, 10);
+    else if (type === "bool") body[key] = val === "true";
+    else body[key] = val;
+  };
+
+  optional("f-pages", "pages", "number");
+  optional("f-year", "year", "number");
+  optional("f-publisher", "publisher", "string");
+
+  const catFields = {
+    programming: [["f-language","language"],["f-edition","edition","number"],["f-in_stock","in_stock","bool"]],
+    fiction: [["f-genre","genre"],["f-setting","setting"],["f-award_winner","award_winner","bool"]],
+    history: [["f-period","period"],["f-region","region"],["f-primary_sources","primary_sources","bool"]],
+    science: [["f-field","field"],["f-peer_reviewed","peer_reviewed","bool"],["f-for_general_audience","for_general_audience","bool"]],
+    biography: [["f-subject","subject"],["f-subject_profession","subject_profession"],["f-era","era"]],
+    "self-help": [["f-topic","topic"],["f-bestseller","bestseller","bool"]],
+    cooking: [["f-cuisine","cuisine"],["f-difficulty","difficulty"],["f-num_recipes","num_recipes","number"],["f-vegetarian_friendly","vegetarian_friendly","bool"]],
+    travel: [["f-destination","destination"],["f-trip_type","trip_type"],["f-includes_maps","includes_maps","bool"]],
+  };
+
+  (catFields[cat] || []).forEach(([id, key, type]) => optional(id, key, type || "string"));
+
+  try {
+    const res = await fetch("/api/books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    formMsg.textContent = `"${data.title}" added successfully!`;
+    formMsg.className = "msg success";
+    form.reset();
+    CATEGORIES.forEach((c) => {
+      const el = document.getElementById(`fields-${c}`);
+      if (el) el.classList.remove("visible");
+    });
+  } catch (err) {
+    formMsg.textContent = err.message;
+    formMsg.className = "msg error";
+  }
+});
+
+function esc(s) {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>

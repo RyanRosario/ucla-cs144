@@ -1,7 +1,7 @@
-# MongoDB Books
+# MongoDB + Mongoose Demo
 
-This directory contains a sample dataset of **1,000 books** used in the
-Lecture 10 live demo. The queries in the slides run against this collection.
+This directory contains a **Mongoose/Express web app** and a sample dataset
+of **1,000 books** used in the Lecture 10 live demo.
 
 ## Dataset Structure
 
@@ -30,6 +30,7 @@ pipeline example on the slides.
 - [MongoDB Shell (`mongosh`)](https://www.mongodb.com/try/download/shell)
 - [MongoDB Database Tools](https://www.mongodb.com/try/download/database-tools)
   (provides `mongoimport`)
+- [Node.js](https://nodejs.org/)
 
 ## Loading the Data
 
@@ -66,7 +67,80 @@ db.Books.insertMany(docs);
 db.Books.countDocuments()   // should return 1000
 ```
 
-## Demo Queries
+## Running the Web App
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Create a `.env` file with your MongoDB connection details:
+
+   ```
+   MONGO_USER=<username>
+   MONGO_PASS=<password>
+   MONGO_HOST=localhost
+   MONGO_PORT=27017
+   MONGO_DB=cs144
+   MONGO_AUTH_SOURCE=admin
+   ```
+
+3. Start the server:
+
+   ```bash
+   npm start
+   ```
+
+4. Open <http://localhost:3456> in your browser.
+
+The app provides:
+- **Search** — type-ahead autocomplete that searches books by title
+- **Book detail** — click a search result to view all of its fields
+- **Add a book** — form with category-specific fields and Mongoose schema validation
+
+## Live Demo Walkthrough
+
+Start the app and open <http://localhost:3456>. Open the browser DevTools
+**Network** tab so students can see each request.
+
+### 1. Autocomplete — `GET /api/books/search`
+
+Type a few characters into the search bar (e.g. "py"). Point out:
+
+- The frontend debounces input and sends `GET /api/books/search?q=py`.
+- On the server (`server.js:20-31`), Mongoose runs `Book.find()` with a
+  `$regex` query, projects only the `title` field, sorts alphabetically,
+  and limits to 10 results.
+- The response is a JSON array of `{ _id, title }` objects that populate the
+  dropdown.
+
+### 2. Book Detail — `GET /api/books/:id`
+
+Click one of the autocomplete results. Point out:
+
+- The frontend sends `GET /api/books/<id>` with the `_id` from step 1.
+- On the server (`server.js:35-38`), Mongoose calls `Book.findById()` to
+  fetch the full document.
+- The response contains every field for that book. The frontend renders
+  category-specific fields (e.g. `language` for programming, `cuisine` for
+  cooking) dynamically.
+
+### 3. Insert — `POST /api/books`
+
+Fill out the "Add a Book" form. Select a category to reveal the
+category-specific fields. Submit the form. Point out:
+
+- The frontend sends `POST /api/books` with a JSON body.
+- On the server (`server.js:42-49`), Mongoose creates a new `Book` instance
+  from the request body, calls `book.save()`, and returns the saved document
+  (including the generated `_id`).
+- If validation fails (e.g. missing required `title` or invalid `category`),
+  Mongoose throws a `ValidationError` and the server returns a 400 with the
+  error message. Try submitting with an empty title to demonstrate this.
+- After inserting, search for the new book to confirm it was saved.
+
+## Demo Queries (mongosh)
 
 These match the examples shown on the slides.
 
@@ -79,9 +153,7 @@ db.Books.find(
 ).sort({ "title": 1 }).limit(5);
 ```
 
-### Find — casual but picky restaurant criteria (books edition)
-
-Cheap fiction books, award-winning, under 400 pages:
+### Find — cheap award-winning fiction under 400 pages
 
 ```js
 db.Books.find(
