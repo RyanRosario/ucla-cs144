@@ -35,96 +35,21 @@
     <option value="CS143">CS143</option>
     <option value="CS144">CS144</option>
   </select>
-  <button onclick="joinRoom()">Join</button>
+  <button id="joinButton">Join</button>
   <h2 id="currentRoom" style="display:none;"></h2>
   <div id="chatbox"></div>
   <input id="messageInput" placeholder="Type a message" style="display:none; width: 70%;">
-  <button id="sendButton" onclick="sendMessage()" style="display:none;">Send</button>
+  <button id="sendButton" style="display:none;">Send</button>
   
   <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
   <script>
-    // Display connection status
     const statusDiv = document.getElementById('status');
     statusDiv.textContent = 'Connecting...';
-    
-    // Set up input event handler
-    document.getElementById('messageInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        sendMessage();
-      }
-    });
-    
-    // Connect with a simple setup first
-    let socket;
-    try {
-      socket = io();
-      
-      socket.on('connect', () => {
-        console.log('Connected!', socket.id);
-        statusDiv.textContent = 'Connected!';
-        statusDiv.style.color = 'green';
-        addMessage('[SYSTEM] Connected to server', 'system');
-      });
-      
-      socket.on('connect_error', (err) => {
-        console.error('Connection error:', err);
-        statusDiv.textContent = `Connection error: ${err.message}`;
-        addMessage(`[SYSTEM] Connection error: ${err.message}`, 'debug');
-      });
-      
-      socket.on('disconnect', (reason) => {
-        console.log('Disconnected:', reason);
-        statusDiv.textContent = `Disconnected: ${reason}`;
-        statusDiv.style.color = 'red';
-        addMessage(`[SYSTEM] Disconnected: ${reason}`, 'system');
-      });
-    } catch (err) {
-      console.error('Socket initialization error:', err);
-      statusDiv.textContent = `Socket initialization error: ${err.message}`;
-      addMessage(`[SYSTEM] Socket initialization error: ${err.message}`, 'debug');
-    }
-    
-    function joinRoom() {
-      const username = document.getElementById('username').value.trim();
-      const room = document.getElementById('room').value;
-      if (username) {
-        if (socket && socket.connected) {
-          socket.emit('join room', { username, room });
-          document.getElementById('currentRoom').innerText = `You are in ${room} as ${username}`;
-          document.getElementById('currentRoom').style.display = 'block';
-          document.getElementById('messageInput').style.display = 'inline';
-          document.getElementById('sendButton').style.display = 'inline';
-          document.getElementById('messageInput').focus();
-        } else {
-          addMessage('[SYSTEM] Cannot join room: not connected to server', 'debug');
-        }
-      } else {
-        addMessage('[SYSTEM] Please enter a username', 'system');
-      }
-    }
-    
-    socket.on('chat message', ({ username, message }) => {
-      addMessage(`${username}: ${message}`);
-    });
-    
-    socket.on('system message', (msg) => {
-      addMessage(`[SYSTEM] ${msg}`, 'system');
-    });
-    
-    function sendMessage() {
-      const input = document.getElementById('messageInput');
-      const text = input.value.trim();
-      if (text !== '') {
-        if (socket && socket.connected) {
-          socket.emit('chat message', text);
-          input.value = '';
-        } else {
-          addMessage('[SYSTEM] Cannot send message: not connected to server', 'debug');
-        }
-      }
-      input.focus();
-    }
-    
+
+    const socket = io();
+
+    // ── Helper functions ──
+
     function addMessage(text, className = '') {
       const chatbox = document.getElementById('chatbox');
       const p = document.createElement('p');
@@ -135,6 +60,76 @@
       chatbox.appendChild(p);
       chatbox.scrollTop = chatbox.scrollHeight;
     }
+
+    function joinRoom() {
+      const username = document.getElementById('username').value.trim();
+      const room = document.getElementById('room').value;
+      if (!username) {
+        addMessage('[SYSTEM] Please enter a username', 'system');
+        return;
+      }
+      if (!socket.connected) {
+        addMessage('[SYSTEM] Cannot join room: not connected to server', 'debug');
+        return;
+      }
+      socket.emit('join room', { username, room });
+      document.getElementById('currentRoom').innerText = `You are in ${room} as ${username}`;
+      document.getElementById('currentRoom').style.display = 'block';
+      document.getElementById('messageInput').style.display = 'inline';
+      document.getElementById('sendButton').style.display = 'inline';
+      document.getElementById('messageInput').focus();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const text = input.value.trim();
+      if (text !== '' && socket.connected) {
+        socket.emit('chat message', text);
+        input.value = '';
+      }
+      input.focus();
+    }
+
+    // ── DOM event listeners ──
+
+    document.getElementById('joinButton').addEventListener('click', joinRoom);
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+    document.getElementById('messageInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // ── Built-in Socket.IO connection lifecycle events ──
+    // These are fired automatically by the client, not emitted by server code.
+
+    socket.on('connect', () => {
+      console.log('Connected!', socket.id);
+      statusDiv.textContent = 'Connected!';
+      statusDiv.style.color = 'green';
+      addMessage('[SYSTEM] Connected to server', 'system');
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('Connection error:', err);
+      statusDiv.textContent = `Connection error: ${err.message}`;
+      addMessage(`[SYSTEM] Connection error: ${err.message}`, 'debug');
+    });
+
+    socket.on('disconnect', (reason) => {
+      console.log('Disconnected:', reason);
+      statusDiv.textContent = `Disconnected: ${reason}`;
+      statusDiv.style.color = 'red';
+      addMessage(`[SYSTEM] Disconnected: ${reason}`, 'system');
+    });
+
+    // ── Custom events emitted by the server ──
+
+    socket.on('chat message', ({ username, message }) => {
+      addMessage(`${username}: ${message}`);
+    });
+
+    socket.on('system message', (msg) => {
+      addMessage(`[SYSTEM] ${msg}`, 'system');
+    });
   </script>
 </body>
 </html>

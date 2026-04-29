@@ -49,5 +49,26 @@ app.post("/api/books", async (req, res) => {
   }
 });
 
+// Update a book
+app.put("/api/books/:id", async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!book) return res.status(404).json({ error: "Book not found" });
+    res.json(book);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Delete a book
+app.delete("/api/books/:id", async (req, res) => {
+  const book = await Book.findByIdAndDelete(req.params.id);
+  if (!book) return res.status(404).json({ error: "Book not found" });
+  res.json({ message: "Book deleted" });
+});
+
 const PORT = process.env.PORT || 3456;
 app.listen(PORT, "0.0.0.0", () => console.log(`Server running on http://localhost:${PORT}`));
