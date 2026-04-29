@@ -1,7 +1,7 @@
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import type { TodoRouter } from "../server/router.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 1990;
 
 const client = createTRPCClient<TodoRouter>({
   links: [

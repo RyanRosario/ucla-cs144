@@ -3,7 +3,7 @@ import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { todoRouter } from "./router.js";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 1990;
 
 app.use(
   "/trpc",
