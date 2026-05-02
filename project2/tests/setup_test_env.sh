@@ -2,9 +2,9 @@
 # setup_test_env.sh - Install dependencies and prepare the local environment
 # for CS 144 Project 2 testing.
 #
-# Run from your project directory (the folder that contains api.js):
+# Run from the tests/ directory inside your project:
 #
-#   ./setup_test_env.sh
+#   cd tests && ./setup_test_env.sh
 #
 # Or point it at your project explicitly:
 #
@@ -48,18 +48,11 @@ _source_nvm() {
 _source_nvm || true
 
 # -- Auto-detect PROJECT_DIR ---------------------------------------------------
-# Walk up from $PWD looking for api.js so the script works even when run from
-# a subdirectory (e.g. project2/tests/).
+# Default to the parent of the directory containing this script, since the
+# script lives in tests/ and the project root is one level up.
 if [[ -z "${PROJECT_DIR:-}" ]]; then
-  _dir="$PWD"
-  while [[ "$_dir" != "/" ]]; do
-    if [[ -f "$_dir/api.js" ]]; then
-      PROJECT_DIR="$_dir"
-      break
-    fi
-    _dir="$(dirname "$_dir")"
-  done
-  PROJECT_DIR="${PROJECT_DIR:-$PWD}"
+  _script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  PROJECT_DIR="$(dirname "$_script_dir")"
 fi
 
 echo ""
@@ -185,7 +178,7 @@ fi
 step "2. npm install in $PROJECT_DIR"
 if [[ ! -f "$PROJECT_DIR/api.js" ]]; then
   fail "api.js not found in $PROJECT_DIR"
-  info "Run this script from your project root, or set PROJECT_DIR:"
+  info "Run this script from your project's tests/ directory, or set PROJECT_DIR:"
   info "  PROJECT_DIR=/path/to/your/project ./setup_test_env.sh"
 elif [[ ! -d "$PROJECT_DIR/node_modules" ]]; then
   echo "  Running npm install..."
