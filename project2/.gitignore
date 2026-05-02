@@ -4,8 +4,14 @@ dist/
 
 # Autograder / solutions / tooling (kept one level up)
 soln/
-tests/
 .claude/
+
+# Don't commit build artifacts inside tests/
+tests/dist/
+tests/pyinstaller-work/
+tests/pyinstaller-specs/
+tests/*.spec
+tests/results.json
 
 # OS / editor cruft
 .DS_Store
