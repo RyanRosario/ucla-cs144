@@ -79,6 +79,15 @@ def _run(binary):
 
     env = os.environ.copy()
 
+    # Auto-set PROJECT_DIR to the project root (parent of tests/) if not
+    # already in the environment.  Without this the binary resolves
+    # PROJECT_DIR relative to its own PyInstaller temp directory.
+    if "PROJECT_DIR" not in env:
+        project_root = os.path.dirname(script_dir)
+        env["PROJECT_DIR"] = project_root
+        print(f"PROJECT_DIR not set — using: {project_root}")
+        print()
+
     collected = []
     try:
         proc = subprocess.Popen(
