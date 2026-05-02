@@ -88,6 +88,37 @@ def _run(binary):
         print(f"PROJECT_DIR not set — using: {project_root}")
         print()
 
+    # Inject nvm-managed node/npm/npx onto PATH if they aren't already there.
+    # nvm doesn't activate in non-interactive shells, so the binary wouldn't
+    # find node even if the user installed it via nvm.
+    if platform.system() != "Windows":
+        import shutil
+        if shutil.which("node") is None:
+            home = os.path.expanduser("~")
+            nvm_candidates = [
+                os.path.join(os.environ.get("NVM_DIR", ""), "alias", "default"),
+                os.path.join(home, ".nvm", "alias", "default"),
+                "/opt/nvm/alias/default",
+            ]
+            for alias_file in nvm_candidates:
+                if os.path.isfile(alias_file):
+                    try:
+                        version = open(alias_file).read().strip()
+                        # version may be "lts/*" or "v24.x.x"
+                        nvm_root = os.path.dirname(os.path.dirname(alias_file))
+                        versions_dir = os.path.join(nvm_root, "versions", "node")
+                        if os.path.isdir(versions_dir):
+                            # Resolve lts/* / default aliases to a real version dir
+                            candidates = sorted(os.listdir(versions_dir), reverse=True)
+                            for v in candidates:
+                                bin_dir = os.path.join(versions_dir, v, "bin")
+                                if os.path.isdir(bin_dir):
+                                    env["PATH"] = bin_dir + os.pathsep + env.get("PATH", "")
+                                    break
+                            break
+                    except Exception:
+                        continue
+
     collected = []
     try:
         proc = subprocess.Popen(
