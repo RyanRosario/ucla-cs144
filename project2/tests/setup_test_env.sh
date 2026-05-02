@@ -326,10 +326,10 @@ if [[ "$ERRORS" -eq 0 ]]; then
   echo "Environment is ready."
   echo ""
   echo "  Phase 1 (fixtures -- no database required):"
-  echo "    PROJECT_DIR=$PROJECT_DIR ./run_tests-<platform>"
+  echo "    cd $PROJECT_DIR && python3 tests/run.py"
   echo ""
   echo "  Phase 1 + Phase 2 (live local MongoDB):"
-  echo "    PROJECT_DIR=$PROJECT_DIR DEBUG_DB=true ./run_tests-<platform>"
+  echo "    cd $PROJECT_DIR && DEBUG_DB=true python3 tests/run.py"
 else
   echo "Setup completed with $ERRORS issue(s). Fix the items marked [FAIL] above,"
   echo "then re-run this script."
