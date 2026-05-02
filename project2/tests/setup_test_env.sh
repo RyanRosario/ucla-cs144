@@ -180,15 +180,46 @@ if [[ ! -f "$PROJECT_DIR/api.js" ]]; then
   fail "api.js not found in $PROJECT_DIR"
   info "Run this script from your project's tests/ directory, or set PROJECT_DIR:"
   info "  PROJECT_DIR=/path/to/your/project ./setup_test_env.sh"
-elif [[ ! -d "$PROJECT_DIR/node_modules" ]]; then
-  echo "  Running npm install..."
-  if npm install --prefix "$PROJECT_DIR"; then
+else
+  # Always run npm install with --include=dev so that devDependencies
+  # (notably @playwright/test) are present even if the student previously
+  # ran `npm install --production`, has NODE_ENV=production set, or has
+  # `production=true` / `omit=dev` configured in their ~/.npmrc.
+  #
+  # We override every avenue npm uses to decide "skip devDependencies":
+  #   - NODE_ENV=development        (overrides exported env)
+  #   - NPM_CONFIG_PRODUCTION=false (overrides ~/.npmrc production=true)
+  #   - NPM_CONFIG_OMIT=""          (overrides ~/.npmrc omit=dev)
+  #   - --include=dev               (explicit CLI override)
+  echo "  Running npm install (with devDependencies) ..."
+  if env NODE_ENV=development \
+         NPM_CONFIG_PRODUCTION=false \
+         NPM_CONFIG_OMIT="" \
+         npm install --include=dev --prefix "$PROJECT_DIR"; then
     pass "npm install complete"
   else
     fail "npm install failed"
   fi
-else
-  pass "node_modules already present"
+
+  # Sanity-check that @playwright/test made it in. If it didn't (e.g. the
+  # student's npm config still excluded it somehow), install it directly.
+  if [[ ! -d "$PROJECT_DIR/node_modules/@playwright/test" ]]; then
+    echo "  @playwright/test still missing -- installing it explicitly ..."
+    if env NODE_ENV=development \
+           NPM_CONFIG_PRODUCTION=false \
+           NPM_CONFIG_OMIT="" \
+           npm install --include=dev --no-save \
+             --prefix "$PROJECT_DIR" "@playwright/test@^1.59.1"; then
+      :
+    fi
+  fi
+  if [[ -d "$PROJECT_DIR/node_modules/@playwright/test" ]]; then
+    pass "@playwright/test is installed in node_modules"
+  else
+    fail "@playwright/test is missing from $PROJECT_DIR/node_modules"
+    info "Check ~/.npmrc for 'production=true' or 'omit=dev' and remove it,"
+    info "or install manually: cd $PROJECT_DIR && npm install --include=dev @playwright/test"
+  fi
 fi
 
 # -- 3. Redis ------------------------------------------------------------------
