@@ -88,6 +88,21 @@ def _run(binary):
         print(f"PROJECT_DIR not set — using: {project_root}")
         print()
 
+    # Load variables from PROJECT_DIR/.env into the environment.
+    # Shell-environment variables take precedence over .env values.
+    _dotenv = os.path.join(env["PROJECT_DIR"], ".env")
+    if os.path.isfile(_dotenv):
+        with open(_dotenv) as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if not _line or _line.startswith("#") or "=" not in _line:
+                    continue
+                _key, _, _val = _line.partition("=")
+                _key = _key.strip()
+                _val = _val.strip().strip('"').strip("'")
+                if _key and _key not in os.environ:
+                    env[_key] = _val
+
     # Inject nvm-managed node/npm/npx onto PATH if they aren't already there.
     # nvm doesn't activate in non-interactive shells, so the binary wouldn't
     # find node even if the user installed it via nvm.
@@ -145,8 +160,54 @@ def _run(binary):
     with open(results_path, "w", encoding="utf-8") as f:
         f.writelines(collected)
 
-    print(f"\nResults written to: {results_path}")
+    if not collected:
+        print(
+            "\n[ERROR] The test runner produced no output and exited"
+            f" with code {exit_code}.\n"
+            "Common causes:\n"
+            "  - A stale process is occupying port 1919. Run:\n"
+            "      pkill -f 'api.js' && lsof -ti :1919 | xargs kill -9\n"
+            "  - node / npx is not on PATH (nvm not activated).\n"
+            "  - PROJECT_DIR does not point to your project root.\n",
+            file=sys.stderr,
+        )
+    else:
+        print(f"\nResults written to: {results_path}")
+
+    pw_exit = _run_playwright(env)
+    if pw_exit != 0:
+        exit_code = pw_exit
+
     return exit_code
+
+
+def _run_playwright(env):
+    """Run npx playwright test from PROJECT_DIR if playwright.config.ts exists."""
+    project_dir = env.get("PROJECT_DIR", "")
+    config = os.path.join(project_dir, "playwright.config.ts")
+    if not os.path.isfile(config):
+        return 0  # No playwright config — skip silently
+
+    import shutil
+    npx = shutil.which("npx", path=env.get("PATH", os.environ.get("PATH", "")))
+    if npx is None:
+        print("\n[WARNING] npx not found on PATH — skipping Playwright tests.", file=sys.stderr)
+        return 0
+
+    print("\n" + "━" * 60)
+    print("  Playwright: Dashboard UI Tests")
+    print("━" * 60 + "\n")
+
+    try:
+        result = subprocess.run(
+            [npx, "playwright", "test", "--reporter=list"],
+            cwd=project_dir,
+            env=env,
+        )
+        return result.returncode
+    except KeyboardInterrupt:
+        print("\n[Interrupted]")
+        return 130
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────
