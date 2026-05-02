@@ -174,15 +174,41 @@ def _run(binary):
     else:
         print(f"\nResults written to: {results_path}")
 
-    pw_exit = _run_playwright(env)
+    pw_exit = _run_playwright(env, "false")
     if pw_exit != 0:
         exit_code = pw_exit
+
+    pw_exit2 = _run_playwright(env, "true")
+    if pw_exit2 != 0:
+        exit_code = pw_exit2
 
     return exit_code
 
 
-def _run_playwright(env):
-    """Run npx playwright test from PROJECT_DIR if playwright.config.ts exists."""
+def _kill_port_1919(env):
+    """Kill any process occupying port 1919 so playwright can start a fresh server."""
+    import shutil
+    lsof = shutil.which("lsof")
+    if not lsof:
+        return
+    try:
+        out = subprocess.check_output(
+            [lsof, "-ti", "tcp:1919"], env=env, stderr=subprocess.DEVNULL
+        )
+        for pid in out.decode().split():
+            pid = pid.strip()
+            if pid.isdigit():
+                subprocess.run(["kill", "-9", pid], check=False)
+    except subprocess.CalledProcessError:
+        pass  # Nothing on port 1919 — fine
+
+
+def _run_playwright(env, use_db):
+    """Run npx playwright test from PROJECT_DIR if playwright.config.ts exists.
+
+    use_db: "false" → fixture mode (mirrors binary's fixture phase)
+            "true"  → production DB mode (mirrors binary's production phase)
+    """
     project_dir = env.get("PROJECT_DIR", "")
     config = os.path.join(project_dir, "playwright.config.ts")
     if not os.path.isfile(config):
@@ -194,15 +220,25 @@ def _run_playwright(env):
         print("\n[WARNING] npx not found on PATH — skipping Playwright tests.", file=sys.stderr)
         return 0
 
+    label = "Fixtures (USE_DB=false)" if use_db == "false" else "Production (USE_DB=true)"
     print("\n" + "━" * 60)
-    print("  Playwright: Dashboard UI Tests")
+    print(f"  Playwright: Dashboard UI Tests — {label}")
     print("━" * 60 + "\n")
+
+    # Kill any server the binary left on port 1919 so playwright always starts
+    # a clean one via webServer (avoids reusing a rate-limited production server).
+    _kill_port_1919(env)
+
+    # CI=1 forces playwright to always spawn a fresh webServer.
+    pw_env = env.copy()
+    pw_env["CI"] = "1"
+    pw_env["USE_DB"] = use_db
 
     try:
         result = subprocess.run(
             [npx, "playwright", "test", "--reporter=list"],
             cwd=project_dir,
-            env=env,
+            env=pw_env,
         )
         return result.returncode
     except KeyboardInterrupt:
