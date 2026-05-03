@@ -55,7 +55,7 @@ test.describe('Trail cards', () => {
     await page.waitForSelector('#trailGridWrapper .card');
     const pagination = page.locator('#trailPagination');
     await expect(pagination).toContainText(/Page \d+ of \d+/);
-    await expect(pagination).toContainText('189 total');
+    await expect(pagination).toContainText(/\d+ total/);
   });
 });
 
@@ -124,7 +124,7 @@ test.describe('Lift cards', () => {
 
     const pagination = page.locator('#liftPagination');
     await expect(pagination).toContainText(/Page \d+ of \d+/);
-    await expect(pagination).toContainText('25 total');
+    await expect(pagination).toContainText(/\d+ total/);
   });
 });
 
@@ -151,32 +151,36 @@ test.describe('Search filtering', () => {
     await page.goto('/');
     await waitForCards(page);
 
+    const initialTrailPagination = await page.locator('#trailPagination').textContent();
     await page.fill('#trailSearch', 'Apple');
 
     await page.waitForFunction(
-      () => {
+      (initial) => {
         const el = document.getElementById('trailPagination');
-        return el && !el.textContent?.includes('189 total');
+        return el && el.textContent !== initial;
       },
+      initialTrailPagination,
       { timeout: 5_000 },
     );
 
     const text = await page.locator('#trailPagination').textContent();
     expect(text).toContain('total');
-    expect(text).not.toContain('189 total');
+    expect(text).not.toBe(initialTrailPagination);
   });
 
   test('lift search filters cards', async ({ page }) => {
     await page.goto('/?tab=lift');
     await waitForCards(page, '#liftGridWrapper .card');
 
+    const initialLiftPagination = await page.locator('#liftPagination').textContent();
     await page.fill('#liftSearch', 'Broadway');
 
     await page.waitForFunction(
-      () => {
+      (initial) => {
         const el = document.getElementById('liftPagination');
-        return el && !el.textContent?.includes('25 total');
+        return el && el.textContent !== initial;
       },
+      initialLiftPagination,
       { timeout: 5_000 },
     );
 

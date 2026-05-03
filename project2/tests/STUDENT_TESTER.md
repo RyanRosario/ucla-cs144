@@ -12,7 +12,7 @@ all prerequisites automatically:
 
 ```bash
 cd /path/to/your/project
-/path/to/project2/tests/setup_test_env.sh
+bash tests/setup_test_env.sh
 ```
 
 The script checks Node.js, runs `npm install`, starts Redis and MongoDB if they
@@ -77,9 +77,8 @@ Go to the latest GitHub Release for this repository and download the binary for 
 |---|---|
 | Linux (x86-64) | `run_tests-linux-x86_64` |
 | Linux (ARM64, e.g. Raspberry Pi) | `run_tests-linux-arm64` |
-| macOS (Intel) | `run_tests-macos-x86_64` |
 | macOS (Apple Silicon) | `run_tests-macos-arm64` |
-| Windows | `run_tests-windows-x86_64.exe` |
+| Windows (x86-64) | `run_tests-windows-x86_64.exe` |
 
 You do **not** need Python installed — the binary is self-contained.
 
@@ -126,13 +125,14 @@ The tester runs two phases:
 **Phase 1** (always runs) — fixture data, `USE_DB=false`. Covers the REST API,
 tRPC endpoints, Redis caching, and authentication. No database needed.
 
-**Phase 2** (runs only when `DEBUG_DB=true` and Phase 1 passes 100%) — connects
+**Phase 2** (runs only when `DEBUG_DB=true` and all Phase 1 API tests pass) — connects
 to your local MongoDB at `localhost:27017` with the sample data loaded. Tests that
 your MongoDB queries return the correct results.
 
 Before running Phase 2, load the sample data:
 ```bash
 mongorestore \
+  --drop \
   --uri="mongodb://localhost:27017" \
   --db=mammoth \
   --collection=status \
