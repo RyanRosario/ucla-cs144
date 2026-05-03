@@ -341,15 +341,23 @@ Document the public URL, the image name, and any deployment notes in the README.
 
 ## Testing Your Work
 
-An automated test suite covers REST endpoints, tRPC procedures, caching, auth, rate limiting, web storage, and browser behavior. Make sure Redis is running, then:
+An automated test suite covers REST endpoints, tRPC procedures, caching, auth, rate limiting, web storage, and browser behavior.
+
+**First-time setup** — from your project directory:
 
 ```bash
-pip install playwright
-python -m playwright install chromium
-python3 run_tests.py
+bash tests/setup_test_env.sh
 ```
 
-> **⚠ Important:** The test runner starts its own server on **port 1919**. If another server is already running on that port (e.g. from a previous `npm start` or `npm run dev`), the tests will silently hit that server instead of the skeleton. Before running the tests, make sure nothing is listening on port 1919:
+This checks Node.js, runs `npm install`, starts Redis and MongoDB if needed, and loads the sample database. See `tests/STUDENT_TESTER.md` for full details.
+
+**Run the tests:**
+
+```bash
+python3 tests/run.py
+```
+
+> **⚠ Important:** The test runner starts its own server on **port 1919**. Make sure nothing else is listening on that port before running:
 >
 > ```bash
 > lsof -i :1919
@@ -360,7 +368,13 @@ python3 run_tests.py
 The suite runs two phases:
 
 1. **Fixtures** (`USE_DB=false`) — tests against the JSON fixtures shipped in the skeleton. No database needed.
-2. **Production** (`USE_DB=true`, `DEBUG=false`) — re-runs all tests against cs144.org MongoDB. Only runs if all fixture tests pass.
+2. **Production** (`DEBUG_DB=true`) — connects to your local MongoDB with the sample data loaded. Only runs if all fixture tests pass.
+
+To run Phase 2, set `DEBUG_DB=true`:
+
+```bash
+DEBUG_DB=true python3 tests/run.py
+```
 
 The tRPC test client can also be run standalone:
 
