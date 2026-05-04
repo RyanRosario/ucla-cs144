@@ -9,6 +9,7 @@ export const LiftStatus = Object.freeze({
     'DELAYED': 'DELAYED',
     'WEATHER HOLD': 'WEATHER HOLD',
     'WIND HOLD': 'WIND HOLD',
+    'LIGHTNING HOLD': 'LIGHTNING HOLD',
   });
 
   export const TrailStatus = Object.freeze({
